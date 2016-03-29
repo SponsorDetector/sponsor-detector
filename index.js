@@ -5,11 +5,13 @@ var buttons = require('sdk/ui/button/action');
 var tabs = require('sdk/tabs');
 var commons = require('./app/commons.js')
 
+/*
+    CREATE TOOLBAR BUTTON
+*/
 function handleClick(state) {
   tabs.open("http://github.com/ogdabou");
 }
 
-console.log(commons.properties.imageFolder + "icon-16.png");
 var toolBarButton = buttons.ActionButton({
     id : "my-toolbar-button",
     label: "This is a test",
@@ -20,6 +22,16 @@ var toolBarButton = buttons.ActionButton({
     },
     onClick: handleClick
   });
+
+/*
+    LISTEN TO TAB OPENING
+*/
+
+tabs.on("ready", function(tab) {
+  tab.attach({
+    contentScriptFile: commons.properties.sourceFolder + "page.js"
+  })
+});
 
 
 exports.toolBarButton = toolBarButton;
