@@ -1,0 +1,15 @@
+{
+  "title": "fffun",
+  "name": "fffun",
+  "version": "0.0.1",
+  "description": "A test",
+  "main": "index.js",
+  "author": "ogdabou",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
+  "license": "MIT",
+  "keywords": [
+    "jetpack"
+  ]
+}
