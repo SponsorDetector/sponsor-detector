@@ -1,9 +1,7 @@
 'use strict';
 
 /*
-  My own attempt to do the 'same' job as AdDetector.
-  Why not contributing to https://github.com/typpo/ad-detector ?
-  Because I want to learn more.
+  Using Rivets(http://rivetsjs.com/) and Pure.css(http://purecss.io/)
 */
 var self = require("sdk/self");
 var buttons = require('sdk/ui/button/action');
@@ -42,28 +40,28 @@ tabs.on("ready", function(tab) {
   POPUP
 
 */
-var text_entry = require("sdk/panel").Panel({
+var popupPanel = require("sdk/panel").Panel({
   contentURL: commons.properties.popupFolder + "popup.html",
-  contentScriptFile: commons.properties.popupFolder + "popup.js",
-  contentStyleFile: commons.properties.popupFolder + "pure-min.css"
+  contentScriptFile:[commons.properties.libsFolder + "rivets.bundled.min.js", commons.properties.popupFolder + "popup.js"] ,
+  contentStyleFile: commons.properties.libsFolder + "pure-min.css"
 });
 
 
-text_entry.on("show", function() {
-  text_entry.port.emit("show");
+popupPanel.on("show", function() {
+  popupPanel.port.emit("show");
 });
 
 // Listen for messages called "text-entered" coming from
 // the content script. The message payload is the text the user
 // entered.
 // In this implementation we'll just log the text to the console.
-text_entry.port.on("text-entered", function (text) {
+popupPanel.port.on("text-entered", function (text) {
   console.log(text);
-  text_entry.hide();
+  popupPanel.hide();
 });
 
 function togglePopup(state) {
-  text_entry.show();
+  popupPanel.show();
   //tabs.open("http://github.com/ogdabou");
 }
 
