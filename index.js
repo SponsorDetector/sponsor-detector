@@ -1,12 +1,11 @@
 'use strict';
-
 /*
   Using Rivets(http://rivetsjs.com/) and Pure.css(http://purecss.io/)
 */
 var self = require("sdk/self");
 var buttons = require('sdk/ui/button/action');
 var tabs = require('sdk/tabs');
-var commons = require('./app/commons.js')
+var p = require('./local/properties.js')
 
 /*
     CREATE TOOLBAR BUTTON
@@ -17,9 +16,9 @@ var toolBarButton = buttons.ActionButton({
     id : "my-toolbar-button",
     label: "This is a test",
     icon: {
-      "16": commons.properties.imageFolder + "icon-16.png",
-      "32": commons.properties.imageFolder + "icon-32.png",
-      "64": commons.properties.imageFolder + "icon-64.png"
+      "16": p.properties.imageFolder() + "icon-16.png",
+      "32": p.properties.imageFolder() + "icon-32.png",
+      "64": p.properties.imageFolder() + "icon-64.png"
     },
     onClick: togglePopup
   });
@@ -30,13 +29,13 @@ var toolBarButton = buttons.ActionButton({
 
 */
 var popupPanel = require("sdk/panel").Panel({
-  contentURL: commons.properties.popupFolder + "popup.html",
+  contentURL: p.properties.popupFolder() + "popup.html",
   contentScriptFile: [
-    commons.properties.libsFolder + "rivets.bundled.min.js",
-    commons.properties.sourceFolder + "utils.js",
-    commons.properties.popupFolder + "popup.js"
+    p.properties.popupLibsFolder() + "rivets.bundled.min.js",
+    p.properties.sourceFolder() + "utils.js",
+    p.properties.popupFolder() + "popup.js"
    ],
-  contentStyleFile: commons.properties.libsFolder + "pure-min.css"
+  contentStyleFile: p.properties.popupLibsFolder() + "pure-min.css"
 });
 
 
@@ -44,14 +43,14 @@ popupPanel.on("show", function() {
   popupPanel.port.emit("show", tabs.activeTab.url);
 
   var worker = tabs.activeTab.attach({
-    contentScriptFile: commons.properties.sourceFolder + "page.js"
+    contentScriptFile: p.properties.sourceFolder() + "page.js"
   })
   worker.port.emit("start-listening");
 });
 
 var pageMod = require('sdk/page-mod').PageMod({
     include : "*",
-    contentStyleFile: commons.properties.injectedFolder + "addEntry/addEntry.css",
+    contentStyleFile: p.properties.injectedFolder() + "addEntry/addEntry.css",
     onAttach: function(worker) {
       console.log("CSS file attached");
     }
@@ -62,8 +61,8 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
   console.log("Inject requested");
   tabs.activeTab.attach({
     contentScriptFile: [
-      commons.properties.sourceFolder + "utils.js",
-      commons.properties.injectedFolder + "addEntry/addEntry.js"
+      p.properties.sourceFolder() + "utils.js",
+      p.properties.injectedFolder() + "addEntry/addEntry.js"
     ]
   });
   popupPanel.hide();

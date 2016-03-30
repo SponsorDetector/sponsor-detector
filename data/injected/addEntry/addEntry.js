@@ -123,8 +123,6 @@ var createAddEntryFormElement = function() {
     var selectedSponsor = sponsorDetectorSelector.options[sponsorDetectorSelector.selectedIndex].value;
     console.log(selectedSponsor);
     if (get(SponsorDetectors[selectedSponsor], document.getElementById("isSponsoredInput"))) {
-      // TODO Get sponsor here
-      console.log("lol");
       var sponsor = getSponsor();
       if (sponsor) {
         var isSponsorisedEl = document.getElementById('isSponsored');
