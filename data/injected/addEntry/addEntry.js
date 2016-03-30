@@ -11,6 +11,7 @@ var createBannerElement = function() {
 // depends on utils.js
 var createSponsorDetectorSelector = function() {
   var sponsorDetectorElement = document.createElement('select');
+  sponsorDetectorElement.setAttribute('id', 'sponsor-detector-element');
   for (var querySelectorFn in SponsorDetectors) {
     if (SponsorDetectors.hasOwnProperty(querySelectorFn)) {
       var detector = document.createElement('option');
@@ -23,6 +24,10 @@ var createSponsorDetectorSelector = function() {
   return sponsorDetectorElement;
 }
 createSponsorDetectorSelector();
+
+var isSponsored = function(detector, input) {
+  console.log("isSponsored", "testing detector", detector, "with input", input);
+}
 
 var createAddEntryFormElement = function() {
   var addEntryForm = document.createElement('form');
@@ -65,13 +70,30 @@ var createAddEntryFormElement = function() {
     }
   }
 
+  var sponsorDetectorSelector = createSponsorDetectorSelector();
+
+  // tmp
+  var testButton = document.createElement('input');
+  testButton.setAttribute('type', 'button');
+  testButton.setAttribute('value', 'Test');
+  testButton.onclick = function() {
+    console.log("coucou hiboux") 
+    var selectedSponsor = sponsorDetectorSelector.options[sponsorDetectorSelector.selectedIndex].value;
+    console.log(selectedSponsor);
+    isSponsored(selectedSponsor, isSponsoredInput.value);
+  }
+  // end tmp
+
   addEntryForm.appendChild(domainInput);
-  addEntryForm.appendChild(createSponsorDetectorSelector());
+  addEntryForm.appendChild(sponsorDetectorSelector);
   addEntryForm.appendChild(isSponsoredInput);
+  addEntryForm.appendChild(testButton);
   addEntryForm.appendChild(spronsorBlockQS);
   addEntryForm.appendChild(submitButton);
   return addEntryForm;
 }
+
+
 
 
 var injectAddEntryBanner = function() {
