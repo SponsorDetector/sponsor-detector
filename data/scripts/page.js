@@ -1,11 +1,17 @@
 'use strict';
 
-console.log("Page " + document.URL + " loaded");
-
 var mentions = [
   "Merci à .* sponsoris[é|er]",
   "sponsoris[é|ée|er]"
 ]
+
+self.port.on("start-listening", function() {
+  document.addEventListener('mouseup', function() {
+    self.emit("text-selected", getSelection());
+  });
+});
+
+var getSelection = function() { return window.getSelection; }
 
 var getPageDomain = function() { return window.location.hostname; };
 
@@ -29,12 +35,13 @@ var injectWarningMessage = function() {
   dockingEl.appendChild(titleEl);
 }
 
-var pageContent = getPageContent();
-for (var i = 0; i < mentions.length; i++) {
-  var mention = mentions[i];
-  if (pageContent.match(mention)) {
-    console.log("Sponsorised content detected by : ", mention);
-    injectWarningMessage();
-    break;
+var findSponsor = function() {
+  for (var i = 0; i < mentions.length; i++) {
+    var mention = mentions[i];
+    if (pageContent.match(mention)) {
+      console.log("Sponsorised content detected by : ", mention);
+      injectWarningMessage();
+      break;
+    }
   }
 }

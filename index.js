@@ -1,9 +1,7 @@
 'use strict';
 
 /*
-  My own attempt to do the 'same' job as AdDetector.
-  Why not contributing to https://github.com/typpo/ad-detector ?
-  Because I want to learn more.
+  Using Rivets(http://rivetsjs.com/) and Pure.css(http://purecss.io/)
 */
 var self = require("sdk/self");
 var buttons = require('sdk/ui/button/action');
@@ -27,44 +25,53 @@ var toolBarButton = buttons.ActionButton({
   });
 
 /*
-    LISTEN TO TAB OPENING
-*/
-
-tabs.on("ready", function(tab) {
-  console.log(tab.url);
-  tab.attach({
-    contentScriptFile: commons.properties.sourceFolder + "page.js"
-  })
-});
-
-/*
 
   POPUP
 
 */
-var text_entry = require("sdk/panel").Panel({
+var popupPanel = require("sdk/panel").Panel({
   contentURL: commons.properties.popupFolder + "popup.html",
-  contentScriptFile: commons.properties.popupFolder + "popup.js",
-  contentStyleFile: commons.properties.popupFolder + "pure-min.css"
+  contentScriptFile: [
+    commons.properties.libsFolder + "rivets.bundled.min.js",
+    commons.properties.sourceFolder + "utils.js",
+    commons.properties.popupFolder + "popup.js"
+   ],
+  contentStyleFile: commons.properties.libsFolder + "pure-min.css"
 });
 
 
-text_entry.on("show", function() {
-  text_entry.port.emit("show");
+popupPanel.on("show", function() {
+  popupPanel.port.emit("show", tabs.activeTab.url);
+
+  var worker = tabs.activeTab.attach({
+    contentScriptFile: commons.properties.sourceFolder + "page.js"
+  })
+  worker.port.emit("start-listening");
 });
 
-// Listen for messages called "text-entered" coming from
-// the content script. The message payload is the text the user
-// entered.
+var pageMod = require('sdk/page-mod').PageMod({
+    include : "*",
+    contentStyleFile: commons.properties.injectedFolder + "addEntry/addEntry.css",
+    onAttach: function(worker) {
+      console.log("CSS file attached");
+    }
+});
+
 // In this implementation we'll just log the text to the console.
-text_entry.port.on("text-entered", function (text) {
-  console.log(text);
-  text_entry.hide();
+popupPanel.port.on("injectAddEntryForm", function (text) {
+  console.log("Inject requested");
+  tabs.activeTab.attach({
+    contentScriptFile: [
+      commons.properties.sourceFolder + "utils.js",
+      commons.properties.injectedFolder + "addEntry/addEntry.js"
+    ]
+  });
+  popupPanel.hide();
 });
 
 function togglePopup(state) {
-  text_entry.show();
-  //tabs.open("http://github.com/ogdabou");
+  // tabs.open("http://www.lesinrocks.com/2015/11/30/contenu-partenaire/fallout-4-test-immense-excitant-libre-11789448/");
+  popupPanel.show();
 }
 
 exports.toolBarButton = toolBarButton;
