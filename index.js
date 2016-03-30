@@ -62,7 +62,7 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
   console.log("Inject requested");
   tabs.activeTab.attach({
     contentScriptFile: [
-      commons.properties.sourceFolder + "addEntry/utils.js",
+      commons.properties.sourceFolder + "utils.js",
       commons.properties.injectedFolder + "addEntry/addEntry.js"
     ]
   });

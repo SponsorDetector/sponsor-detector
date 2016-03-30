@@ -12,9 +12,23 @@ var Utils = {
     //find & remove port number
     domain = domain.split(':')[0];
     return domain;
+  }
+};
+
+var SponsorDetectors = {
+  querySelector : function(querySelector) {
+    return document.querySelector(selector) !== null;
   },
 
-  querySelector : function(querySelector) {
-    return document.querySelector(querySelector);
+  titleContains : function(textToContain) {
+    return document.title.indexOf(textToContain) > -1;
+  },
+
+  htmlBlockContains : function(querySelector, regexToMatch) {
+    var element = document.querySelector(querySelector);
+    if (element) {
+      return element.innerHTML.match(regexToMatch);
+    }
+    return false;
   }
-}
+};

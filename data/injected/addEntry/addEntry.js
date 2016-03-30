@@ -8,6 +8,22 @@ var createBannerElement = function() {
   return banner;
 }
 
+// depends on utils.js
+var createSponsorDetectorSelector = function() {
+  var sponsorDetectorElement = document.createElement('select');
+  for (var querySelectorFn in SponsorDetectors) {
+    if (SponsorDetectors.hasOwnProperty(querySelectorFn)) {
+      var detector = document.createElement('option');
+      detector.value = querySelectorFn;
+      detector.text = querySelectorFn;
+      sponsorDetectorElement.appendChild(detector);
+      console.log("Sponsor detector :", querySelectorFn);
+    }
+  }
+  return sponsorDetectorElement;
+}
+createSponsorDetectorSelector();
+
 var createAddEntryFormElement = function() {
   var addEntryForm = document.createElement('form');
 
@@ -17,10 +33,10 @@ var createAddEntryFormElement = function() {
   domainInput.setAttribute('disabled', 'true');
   domainInput.setAttribute('value', window.location.hostname);
 
-  var titleBlockQS = document.createElement('input');
-  titleBlockQS.setAttribute('id', 'titleBlockQS');
-  titleBlockQS.setAttribute('type', 'text');
-  titleBlockQS.setAttribute('placeholder', "ex: #article.title");
+  var isSponsoredInput = document.createElement('input');
+  isSponsoredInput.setAttribute('id', 'isSponsoredInput');
+  isSponsoredInput.setAttribute('type', 'text');
+  isSponsoredInput.setAttribute('placeholder', "ex: #article.title");
 
   var spronsorBlockQS = document.createElement('input');
   spronsorBlockQS.setAttribute('id', 'spronsorBlockQS');
@@ -33,7 +49,7 @@ var createAddEntryFormElement = function() {
   submitButton.setAttribute('value', 'Envoyer');
   submitButton.onclick = function() {
     if (!document.getElementById("domainInput").value
-      || !document.getElementById("titleBlockQS").value
+      || !document.getElementById("isSponsoredInput").value
       || !document.getElementById("sponsorBlockQS").value)
     {
       console.log("ERROR : every fields shoudd be complete");
@@ -42,7 +58,7 @@ var createAddEntryFormElement = function() {
     else {
       var entry = {
         domain : document.getElementById("domainInput").value,
-        titleBlockQS : document.getElementById("titleBlockQS").value,
+        isSponsoredInput : document.getElementById("isSponsoredInput").value,
         sponsorBlockQS : document.getElementById("sponsorBlockQS").value
       }
       console.log(entry);
@@ -50,7 +66,8 @@ var createAddEntryFormElement = function() {
   }
 
   addEntryForm.appendChild(domainInput);
-  addEntryForm.appendChild(titleBlockQS);
+  addEntryForm.appendChild(createSponsorDetectorSelector());
+  addEntryForm.appendChild(isSponsoredInput);
   addEntryForm.appendChild(spronsorBlockQS);
   addEntryForm.appendChild(submitButton);
   return addEntryForm;
