@@ -70,6 +70,7 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
 });
 
 function togglePopup(state) {
+  // tabs.open("http://www.lesinrocks.com/2015/11/30/contenu-partenaire/fallout-4-test-immense-excitant-libre-11789448/");
   popupPanel.show();
 }
 

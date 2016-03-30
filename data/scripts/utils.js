@@ -17,18 +17,24 @@ var Utils = {
 
 var SponsorDetectors = {
   querySelector : function(querySelector) {
-    return document.querySelector(selector) !== null;
+    return document.querySelector(querySelector) != null;
   },
 
   titleContains : function(textToContain) {
     return document.title.indexOf(textToContain) > -1;
   },
-
-  htmlBlockContains : function(querySelector, regexToMatch) {
+  // extract the smth using regex
+  htmlBlockContains : function(querySelector, regexString) {
+    var result;
+    console.log(querySelector, regexString);
     var element = document.querySelector(querySelector);
-    if (element) {
-      return element.innerHTML.match(regexToMatch);
+    var regexToMatch = new RegExp(regexString);
+    console.log(element.innerHTML, regexToMatch);
+    var match = element.innerHTML.match(regexToMatch);
+    console.log("match", match);
+    if (match && match[1]) {
+      result = match[1];
     }
-    return false;
+    return result;
   }
 };

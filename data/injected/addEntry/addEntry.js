@@ -8,6 +8,7 @@ var createBannerElement = function() {
   return banner;
 }
 
+
 // depends on utils.js
 var createSponsorDetectorSelector = function() {
   var sponsorDetectorElement = document.createElement('select');
@@ -25,9 +26,34 @@ var createSponsorDetectorSelector = function() {
 }
 createSponsorDetectorSelector();
 
-var isSponsored = function(detector, input) {
-  console.log("isSponsored", "testing detector", detector, "with input", input);
+
+
+var get = function(detector, input) {
+  var value = input.value;
+  console.log("get", value);
+  var detected = detector(value);
+  if (detected) {
+    console.log("Sponsorised indicator Detected");
+  }
+  else {
+    console.log("Sposorised indicator absent");
+  }
+  return detected;
 }
+
+var getSponsor = function() {
+  var sponsor;
+  console.log('extracting sponsor');
+  var sponsorElQuerySelecor = document.getElementById('spronsorBlockQS');
+  var sponsorRegExpInput = document.getElementById('sponsorRegExpInput');
+  console.log(sponsorElQuerySelecor, sponsorRegExpInput);
+  if (sponsorElQuerySelecor && sponsorRegExpInput) {
+    sponsor = SponsorDetectors.htmlBlockContains(sponsorElQuerySelecor.value , sponsorRegExpInput.value);
+    console.log("sponsor", sponsor)
+  }
+  return sponsor;
+}
+
 
 var createAddEntryFormElement = function() {
   var addEntryForm = document.createElement('form');
@@ -43,10 +69,27 @@ var createAddEntryFormElement = function() {
   isSponsoredInput.setAttribute('type', 'text');
   isSponsoredInput.setAttribute('placeholder', "ex: #article.title");
 
+  var sponsorFnSelectorEl = document.createElement('select');
+  sponsorFnSelectorEl.setAttribute('id', 'sponsorFnSelectorEl');
+  sponsorFnSelectorEl.setAttribute('disabled', true);
+  var sponsorFnOption = document.createElement('option');
+  sponsorFnOption.value = "htmlBlockContains";
+  sponsorFnOption.text = "htmlBlockContains";
+  sponsorFnSelectorEl.appendChild(sponsorFnOption);
+
   var spronsorBlockQS = document.createElement('input');
   spronsorBlockQS.setAttribute('id', 'spronsorBlockQS');
   spronsorBlockQS.setAttribute('type', 'text');
   spronsorBlockQS.setAttribute('placeholder', "ex: #article.sponsor");
+
+  var sponsorEl = document.createElement('input');
+  sponsorEl.setAttribute('id', 'sponsorEl');
+  sponsorEl.setAttribute('disabled', 'true');
+
+  var sponsorRegExpInput = document.createElement('input');
+  sponsorRegExpInput.setAttribute('id', 'sponsorRegExpInput');
+  sponsorRegExpInput.setAttribute('type', 'text');
+  sponsorRegExpInput.setAttribute('placeholder', "ex: Sponsorisé par .*");
 
   var submitButton = document.createElement('input');
   submitButton.setAttribute('id', 'add-entry-submit-button');
@@ -77,18 +120,36 @@ var createAddEntryFormElement = function() {
   testButton.setAttribute('type', 'button');
   testButton.setAttribute('value', 'Test');
   testButton.onclick = function() {
-    console.log("coucou hiboux") 
     var selectedSponsor = sponsorDetectorSelector.options[sponsorDetectorSelector.selectedIndex].value;
     console.log(selectedSponsor);
-    isSponsored(selectedSponsor, isSponsoredInput.value);
+    if (get(SponsorDetectors[selectedSponsor], document.getElementById("isSponsoredInput"))) {
+      // TODO Get sponsor here
+      console.log("lol");
+      var sponsor = getSponsor();
+      if (sponsor) {
+        var isSponsorisedEl = document.getElementById('isSponsored');
+        isSponsorisedEl.checked = true;
+        isSponsorisedEl.setAttribute('title', 'Sponsor indicator detected !');
+      }
+    }
   }
   // end tmp
+
+  var isSponsorisedEl = document.createElement('input');
+  isSponsorisedEl.setAttribute('type', 'checkbox');
+  isSponsorisedEl.setAttribute('id', 'isSponsored');
+  isSponsorisedEl.setAttribute('title', 'No sponsor indicator detected');
 
   addEntryForm.appendChild(domainInput);
   addEntryForm.appendChild(sponsorDetectorSelector);
   addEntryForm.appendChild(isSponsoredInput);
-  addEntryForm.appendChild(testButton);
+
+  addEntryForm.appendChild(sponsorFnSelectorEl);
   addEntryForm.appendChild(spronsorBlockQS);
+  addEntryForm.appendChild(sponsorRegExpInput);
+
+  addEntryForm.appendChild(isSponsorisedEl);
+  addEntryForm.appendChild(testButton);
   addEntryForm.appendChild(submitButton);
   return addEntryForm;
 }
