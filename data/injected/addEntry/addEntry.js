@@ -10,11 +10,11 @@ var createBannerElement = function() {
 
 
 // depends on utils.js
-var createSponsorDetectorSelector = function() {
+var createSponsorDetectorServiceselector = function() {
   var sponsorDetectorElement = document.createElement('select');
   sponsorDetectorElement.setAttribute('id', 'sponsor-detector-element');
-  for (var querySelectorFn in SponsorDetectors) {
-    if (SponsorDetectors.hasOwnProperty(querySelectorFn)) {
+  for (var querySelectorFn in SponsorDetectorServices) {
+    if (SponsorDetectorServices.hasOwnProperty(querySelectorFn)) {
       var detector = document.createElement('option');
       detector.value = querySelectorFn;
       detector.text = querySelectorFn;
@@ -24,31 +24,13 @@ var createSponsorDetectorSelector = function() {
   }
   return sponsorDetectorElement;
 }
-createSponsorDetectorSelector();
+createSponsorDetectorServiceselector();
 
-
-
-var get = function(detector, input) {
-  var value = input.value;
-  console.log("get", value);
-  var detected = detector(value);
-  if (detected) {
-    console.log("Sponsorised indicator Detected");
-  }
-  else {
-    console.log("Sposorised indicator absent");
-  }
-  return detected;
-}
-
-var getSponsor = function() {
+var getSponsor = function(cssQuery, extractionRegex) {
   var sponsor;
   console.log('extracting sponsor');
-  var sponsorElQuerySelecor = document.getElementById('spronsorBlockQS');
-  var sponsorRegExpInput = document.getElementById('sponsorRegExpInput');
-  console.log(sponsorElQuerySelecor, sponsorRegExpInput);
-  if (sponsorElQuerySelecor && sponsorRegExpInput) {
-    sponsor = SponsorDetectors.htmlBlockContains(sponsorElQuerySelecor.value , sponsorRegExpInput.value);
+  if (cssQuery && extractionRegex) {
+    sponsor = SponsorExtractorServices.findIntHtmlElement(cssQuery, extractionRegex);
     console.log("sponsor", sponsor)
   }
   return sponsor;
@@ -73,8 +55,8 @@ var createAddEntryFormElement = function() {
   sponsorFnSelectorEl.setAttribute('id', 'sponsorFnSelectorEl');
   sponsorFnSelectorEl.setAttribute('disabled', true);
   var sponsorFnOption = document.createElement('option');
-  sponsorFnOption.value = "htmlBlockContains";
-  sponsorFnOption.text = "htmlBlockContains";
+  sponsorFnOption.value = "findIntHtmlElement";
+  sponsorFnOption.text = "findIntHtmlElement";
   sponsorFnSelectorEl.appendChild(sponsorFnOption);
 
   var spronsorBlockQS = document.createElement('input');
@@ -113,17 +95,19 @@ var createAddEntryFormElement = function() {
     }
   }
 
-  var sponsorDetectorSelector = createSponsorDetectorSelector();
+  var SponsorDetectorServiceselector = createSponsorDetectorServiceselector();
 
   // tmp
   var testButton = document.createElement('input');
   testButton.setAttribute('type', 'button');
   testButton.setAttribute('value', 'Test');
   testButton.onclick = function() {
-    var selectedSponsor = sponsorDetectorSelector.options[sponsorDetectorSelector.selectedIndex].value;
-    console.log(selectedSponsor);
-    if (get(SponsorDetectors[selectedSponsor], document.getElementById("isSponsoredInput"))) {
-      var sponsor = getSponsor();
+    var selectedDetector = SponsorDetectorServiceselector.options[SponsorDetectorServiceselector.selectedIndex].value;
+    var isSponsoredCssQuery = document.getElementById("isSponsoredInput").value;
+    if (SponsorDetectorServices.isPresent(selectedDetector, isSponsoredCssQuery)) {
+      var sponsorElQuerySelecor = document.getElementById('spronsorBlockQS');
+      var sponsorRegExpInput = document.getElementById('sponsorRegExpInput');
+      var sponsor = getSponsor(sponsorElQuerySelecor.value, sponsorRegExpInput.value);
       if (sponsor) {
         var isSponsorisedEl = document.getElementById('isSponsored');
         isSponsorisedEl.checked = true;
@@ -139,7 +123,7 @@ var createAddEntryFormElement = function() {
   isSponsorisedEl.setAttribute('title', 'No sponsor indicator detected');
 
   addEntryForm.appendChild(domainInput);
-  addEntryForm.appendChild(sponsorDetectorSelector);
+  addEntryForm.appendChild(SponsorDetectorServiceselector);
   addEntryForm.appendChild(isSponsoredInput);
 
   addEntryForm.appendChild(sponsorFnSelectorEl);

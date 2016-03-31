@@ -41,11 +41,6 @@ var popupPanel = require("sdk/panel").Panel({
 
 popupPanel.on("show", function() {
   popupPanel.port.emit("show", tabs.activeTab.url);
-
-  var worker = tabs.activeTab.attach({
-    contentScriptFile: p.properties.sourceFolder() + "page.js"
-  })
-  worker.port.emit("start-listening");
 });
 
 var pageMod = require('sdk/page-mod').PageMod({
@@ -62,6 +57,8 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
   tabs.activeTab.attach({
     contentScriptFile: [
       p.properties.sourceFolder() + "utils.js",
+      p.properties.servicesFolder() + "SponsorDetectorServices.js",
+      p.properties.servicesFolder() + "SponsorExtractorServices.js",
       p.properties.injectedFolder() + "addEntry/addEntry.js"
     ]
   });
@@ -69,7 +66,6 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
 });
 
 function togglePopup(state) {
-  // tabs.open("http://www.lesinrocks.com/2015/11/30/contenu-partenaire/fallout-4-test-immense-excitant-libre-11789448/");
   popupPanel.show();
 }
 

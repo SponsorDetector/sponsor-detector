@@ -15,7 +15,7 @@ var Utils = {
   }
 };
 
-var SponsorDetectors = {
+var SponsorDetectorServices = {
   querySelector : function(querySelector) {
     return document.querySelector(querySelector) != null;
   },
@@ -24,7 +24,7 @@ var SponsorDetectors = {
     return document.title.indexOf(textToContain) > -1;
   },
   // extract the smth using regex
-  htmlBlockContains : function(querySelector, regexString) {
+  findIntHtmlElement : function(querySelector, regexString) {
     var result;
     console.log(querySelector, regexString);
     var element = document.querySelector(querySelector);
