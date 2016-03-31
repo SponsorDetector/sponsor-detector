@@ -1,38 +1,35 @@
 'use strict';
-console.log("addEntry.js");
 
-var getSponsor = function(cssQuery, extractionRegex) {
-  var sponsor;
-  console.log('extracting sponsor');
-  if (cssQuery && extractionRegex) {
-    sponsor = SponsorExtractorServices.findIntHtmlElement(cssQuery, extractionRegex);
-    console.log("sponsor", sponsor)
+var FormFactory = new function() {
+
+  var createDomainInputEl = function() {
+    var domainInput = document.createElement('input');
+    domainInput.setAttribute('id', 'domainInput');
+    domainInput.setAttribute('type', 'text');
+    domainInput.setAttribute('disabled', 'true');
+    domainInput.setAttribute('value', window.location.hostname);
+    return domainInput;
   }
-  return sponsor;
-}
 
+  var createIsSponsoredInput = function() {
+    var isSponsoredInput = document.createElement('input');
+    isSponsoredInput.setAttribute('id', 'isSponsoredInput');
+    isSponsoredInput.setAttribute('type', 'text');
+    isSponsoredInput.setAttribute('placeholder', "ex: #article.title");
+    return isSponsoredInput;
+  }
 
-var createAddEntryFormElement = function() {
-  var addEntryForm = document.createElement('form');
+  var createSponsorDetectorEl = function() {
+    var sponsorFnSelectorEl = document.createElement('select');
+    sponsorFnSelectorEl.setAttribute('id', 'sponsorFnSelectorEl');
+    sponsorFnSelectorEl.setAttribute('disabled', true);
 
-  var domainInput = document.createElement('input');
-  domainInput.setAttribute('id', 'domainInput');
-  domainInput.setAttribute('type', 'text');
-  domainInput.setAttribute('disabled', 'true');
-  domainInput.setAttribute('value', window.location.hostname);
-
-  var isSponsoredInput = document.createElement('input');
-  isSponsoredInput.setAttribute('id', 'isSponsoredInput');
-  isSponsoredInput.setAttribute('type', 'text');
-  isSponsoredInput.setAttribute('placeholder', "ex: #article.title");
-
-  var sponsorFnSelectorEl = document.createElement('select');
-  sponsorFnSelectorEl.setAttribute('id', 'sponsorFnSelectorEl');
-  sponsorFnSelectorEl.setAttribute('disabled', true);
-  var sponsorFnOption = document.createElement('option');
-  sponsorFnOption.value = "findIntHtmlElement";
-  sponsorFnOption.text = "findIntHtmlElement";
-  sponsorFnSelectorEl.appendChild(sponsorFnOption);
+    var sponsorFnOption = document.createElement('option');
+    sponsorFnOption.value = "findIntHtmlElement";
+    sponsorFnOption.text = "findIntHtmlElement";
+    sponsorFnSelectorEl.appendChild(sponsorFnOption);
+    return sponsorFnSelectorEl;
+  }
 
   var spronsorBlockQS = document.createElement('input');
   spronsorBlockQS.setAttribute('id', 'spronsorBlockQS');
@@ -97,27 +94,20 @@ var createAddEntryFormElement = function() {
   isSponsorisedEl.setAttribute('id', 'isSponsored');
   isSponsorisedEl.setAttribute('title', 'No sponsor indicator detected');
 
-  addEntryForm.appendChild(domainInput);
-  addEntryForm.appendChild(SponsorDetectorServiceselector);
-  addEntryForm.appendChild(isSponsoredInput);
 
-  addEntryForm.appendChild(sponsorFnSelectorEl);
-  addEntryForm.appendChild(spronsorBlockQS);
-  addEntryForm.appendChild(sponsorRegExpInput);
+  this.build() = function() {
+    var addEntryForm = document.createElement('form');
+    addEntryForm.appendChild(domainInput);
+    addEntryForm.appendChild(SponsorDetectorServiceselector);
+    addEntryForm.appendChild(isSponsoredInput);
 
-  addEntryForm.appendChild(isSponsorisedEl);
-  addEntryForm.appendChild(testButton);
-  addEntryForm.appendChild(submitButton);
-  return addEntryForm;
+    addEntryForm.appendChild(sponsorFnSelectorEl);
+    addEntryForm.appendChild(spronsorBlockQS);
+    addEntryForm.appendChild(sponsorRegExpInput);
+
+    addEntryForm.appendChild(isSponsorisedEl);
+    addEntryForm.appendChild(testButton);
+    addEntryForm.appendChild(submitButton);
+    return addEntryForm;
+  }
 }
-
-
-
-
-var injectAddEntryBanner = function() {
-  var banner = createBannerElement();
-  banner.appendChild(createAddEntryFormElement());
-  document.getElementsByTagName('body')[0].appendChild(banner);
-}
-
-injectAddEntryBanner();

@@ -59,7 +59,10 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
       p.properties.sourceFolder() + "utils.js",
       p.properties.servicesFolder() + "SponsorDetectorServices.js",
       p.properties.servicesFolder() + "SponsorExtractorServices.js",
-      p.properties.injectedFolder() + "addEntry/addEntry.js"
+      p.properties.injectedFolder() + "model/FormFactory.js",
+      p.properties.injectedFolder() + "model/BannerFactory.js"
+      p.properties.injectedFolder() + "addEntry/addEntry.js",
+      p.properties.injectedFolder() + "main.js"
     ]
   });
   popupPanel.hide();

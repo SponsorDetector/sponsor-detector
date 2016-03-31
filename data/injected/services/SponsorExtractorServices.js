@@ -1,16 +1,15 @@
 'use strict';
 
-var SponsorExtractorServices = {
+var SponsorExtractorServices = new function() {
 
   // extract the smth using regex
-  findIntHtmlElement : function(querySelector, regexString) {
+  this.findIntHtmlElement = function(cssQuery, regexString) {
     var result;
-    console.log(querySelector, regexString);
-    var element = document.querySelector(querySelector);
+    console.log(cssQuery, regexString);
+    var element = document.querySelector(cssQuery);
     var regexToMatch = new RegExp(regexString);
     console.log(element.innerHTML, regexToMatch);
     var match = element.innerHTML.match(regexToMatch);
-    console.log("match", match);
     if (match && match[1]) {
       result = match[1];
     }
