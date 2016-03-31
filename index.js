@@ -45,10 +45,7 @@ popupPanel.on("show", function() {
 
 var pageMod = require('sdk/page-mod').PageMod({
     include : "*",
-    contentStyleFile: p.properties.injectedFolder() + "addEntry/addEntry.css",
-    onAttach: function(worker) {
-      console.log("CSS file attached");
-    }
+    contentStyleFile: p.properties.injectedFolder() + "css/fffun.css"
 });
 
 // In this implementation we'll just log the text to the console.
@@ -57,11 +54,10 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
   tabs.activeTab.attach({
     contentScriptFile: [
       p.properties.sourceFolder() + "utils.js",
-      p.properties.servicesFolder() + "SponsorDetectorServices.js",
-      p.properties.servicesFolder() + "SponsorExtractorServices.js",
-      p.properties.injectedFolder() + "model/FormFactory.js",
-      p.properties.injectedFolder() + "model/BannerFactory.js"
-      p.properties.injectedFolder() + "addEntry/addEntry.js",
+      p.properties.servicesFolder() + "DetectorServices.js",
+      p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.injectedFolder() + "factory/FormFactory.js",
+      p.properties.injectedFolder() + "factory/BannerFactory.js",
       p.properties.injectedFolder() + "main.js"
     ]
   });

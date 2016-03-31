@@ -1,6 +1,6 @@
 'use strict';
 
-var SponsorDetectorServices = new function() {
+var DetectorServices = new function() {
 
   var _detectors = {
     querySelector : function(querySelector) {
