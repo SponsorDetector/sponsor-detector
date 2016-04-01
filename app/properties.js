@@ -11,7 +11,7 @@ function properties() {
     imageFolder : IMAGE_FOLDER_PATH,
     sourceFolder: SOURCE_FOLDER,
     popupFolder : POPUP_FOLDER,
-    libsFolder : LIBS_FOLDER,
+    popupLibsFolder : LIBS_FOLDER,
     injectedFolder : INJECTED_SOURCES
   }
 };

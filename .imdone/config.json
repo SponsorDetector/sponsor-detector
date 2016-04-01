@@ -24,6 +24,14 @@
     {
       "name": "TODO",
       "hidden": false
+    },
+    {
+      "name": "Ongoing",
+      "hidden": false
+    },
+    {
+      "name": "closed",
+      "hidden": false
     }
   ],
   "marked": {

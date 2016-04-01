@@ -14,27 +14,3 @@ var Utils = {
     return domain;
   }
 };
-
-var SponsorDetectors = {
-  querySelector : function(querySelector) {
-    return document.querySelector(querySelector) != null;
-  },
-
-  titleContains : function(textToContain) {
-    return document.title.indexOf(textToContain) > -1;
-  },
-  // extract the smth using regex
-  htmlBlockContains : function(querySelector, regexString) {
-    var result;
-    console.log(querySelector, regexString);
-    var element = document.querySelector(querySelector);
-    var regexToMatch = new RegExp(regexString);
-    console.log(element.innerHTML, regexToMatch);
-    var match = element.innerHTML.match(regexToMatch);
-    console.log("match", match);
-    if (match && match[1]) {
-      result = match[1];
-    }
-    return result;
-  }
-};

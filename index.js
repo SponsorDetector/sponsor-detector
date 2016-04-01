@@ -1,12 +1,11 @@
 'use strict';
-
 /*
   Using Rivets(http://rivetsjs.com/) and Pure.css(http://purecss.io/)
 */
 var self = require("sdk/self");
 var buttons = require('sdk/ui/button/action');
 var tabs = require('sdk/tabs');
-var commons = require('./app/commons.js')
+var p = require('./local/properties.js')
 
 /*
     CREATE TOOLBAR BUTTON
@@ -17,9 +16,9 @@ var toolBarButton = buttons.ActionButton({
     id : "my-toolbar-button",
     label: "This is a test",
     icon: {
-      "16": commons.properties.imageFolder + "icon-16.png",
-      "32": commons.properties.imageFolder + "icon-32.png",
-      "64": commons.properties.imageFolder + "icon-64.png"
+      "16": p.properties.imageFolder() + "icon-16.png",
+      "32": p.properties.imageFolder() + "icon-32.png",
+      "64": p.properties.imageFolder() + "icon-64.png"
     },
     onClick: togglePopup
   });
@@ -30,31 +29,23 @@ var toolBarButton = buttons.ActionButton({
 
 */
 var popupPanel = require("sdk/panel").Panel({
-  contentURL: commons.properties.popupFolder + "popup.html",
+  contentURL: p.properties.popupFolder() + "popup.html",
   contentScriptFile: [
-    commons.properties.libsFolder + "rivets.bundled.min.js",
-    commons.properties.sourceFolder + "utils.js",
-    commons.properties.popupFolder + "popup.js"
+    p.properties.popupLibsFolder() + "rivets.bundled.min.js",
+    p.properties.sourceFolder() + "utils.js",
+    p.properties.popupFolder() + "popup.js"
    ],
-  contentStyleFile: commons.properties.libsFolder + "pure-min.css"
+  contentStyleFile: p.properties.popupLibsFolder() + "pure-min.css"
 });
 
 
 popupPanel.on("show", function() {
   popupPanel.port.emit("show", tabs.activeTab.url);
-
-  var worker = tabs.activeTab.attach({
-    contentScriptFile: commons.properties.sourceFolder + "page.js"
-  })
-  worker.port.emit("start-listening");
 });
 
 var pageMod = require('sdk/page-mod').PageMod({
     include : "*",
-    contentStyleFile: commons.properties.injectedFolder + "addEntry/addEntry.css",
-    onAttach: function(worker) {
-      console.log("CSS file attached");
-    }
+    contentStyleFile: p.properties.injectedFolder() + "css/fffun.css"
 });
 
 // In this implementation we'll just log the text to the console.
@@ -62,15 +53,18 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
   console.log("Inject requested");
   tabs.activeTab.attach({
     contentScriptFile: [
-      commons.properties.sourceFolder + "utils.js",
-      commons.properties.injectedFolder + "addEntry/addEntry.js"
+      p.properties.sourceFolder() + "utils.js",
+      p.properties.servicesFolder() + "DetectorServices.js",
+      p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.injectedFolder() + "factory/FormFactory.js",
+      p.properties.injectedFolder() + "factory/BannerFactory.js",
+      p.properties.injectedFolder() + "main.js"
     ]
   });
   popupPanel.hide();
 });
 
 function togglePopup(state) {
-  // tabs.open("http://www.lesinrocks.com/2015/11/30/contenu-partenaire/fallout-4-test-immense-excitant-libre-11789448/");
   popupPanel.show();
 }
 
