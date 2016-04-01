@@ -24,12 +24,12 @@ var bindForm = function(form) {
 
   form.testButton.onclick = function() {
     var detectorName = form.detectorServiceSelector.options[form.detectorServiceSelector.selectedIndex].value;
-    var cssQuery = form.isSponsoredInput.value;
-    if (detectorName && cssQuery && DetectorServices.isPresent(detectorName, cssQuery)) {
+    var query = form.isSponsoredInput.value;
+    if (detectorName && query && DetectorServices.isPresent(detectorName, query)) {
+      form.isSponsorisedEl.checked = true;
+      form.isSponsorisedEl.setAttribute('title', 'Sponsor indicator detected !');
       var sponsor = ExtractorServices.findIntHtmlElement(form.sponsorBlockQS.value, form.sponsorRegExpInput.value);
       if (sponsor) {
-        form.isSponsorisedEl.checked = true;
-        form.isSponsorisedEl.setAttribute('title', 'Sponsor indicator detected !');
         form.sponsorEl.value = sponsor;
       }
     }

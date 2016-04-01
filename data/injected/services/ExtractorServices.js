@@ -7,11 +7,17 @@ var ExtractorServices = new function() {
     var result;
     console.log("query", cssQuery, "regEx", regexString);
     var element = document.querySelector(cssQuery);
-    var regexToMatch = new RegExp(regexString);
-    var match = element.innerHTML.match(regexToMatch);
-    if (match && match[1]) {
-      result = match[1];
+
+    if (!regexString || regexString === "") {
+      result = element.innerHTML;
     }
-    return result;
+    else {
+      var regexToMatch = new RegExp(regexString);
+      var match = element.innerHTML.match(regexToMatch);
+      if (match && match[1]) {
+        result = match[1];
+      }
+    }
+    return result.trim();
   }
 };

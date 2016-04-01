@@ -9,13 +9,17 @@ var DetectorServices = new function() {
 
     titleContains : function(textToContain) {
       return document.title.indexOf(textToContain) > -1;
+    },
+
+    urlContains : function(textToContain) {
+      return window.location.href.indexOf(textToContain) > -1;
     }
   };
 
-  this.isPresent = function(selectedDetector, value) {
-    console.log("get", value);
-    var detector = _detectors[selectedDetector];
-    var detected = detector(value);
+  this.isPresent = function(detectoName, query) {
+    console.log("detectoName",detectoName, "quey", query);
+    var detector = _detectors[detectoName];
+    var detected = detector(query);
     if (detected) {
       console.log("Sponsorised indicator Detected");
     }
