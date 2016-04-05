@@ -45,6 +45,13 @@ popupPanel.on("show", function() {
 
 var pageMod = require('sdk/page-mod').PageMod({
     include : "*",
+    contentScriptFile : [
+      p.properties.sourceFolder() + "utils.js",
+      p.properties.injectedFolder() + "configurations/Confs.js",
+      p.properties.servicesFolder() + "DetectorServices.js",
+      p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.injectedFolder() + "main.js"
+    ],
     contentStyleFile: p.properties.injectedFolder() + "css/fffun.css"
 });
 
@@ -58,7 +65,7 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
       p.properties.servicesFolder() + "ExtractorServices.js",
       p.properties.injectedFolder() + "factory/FormFactory.js",
       p.properties.injectedFolder() + "factory/BannerFactory.js",
-      p.properties.injectedFolder() + "main.js"
+      p.properties.injectedFolder() + "factory/main.js"
     ]
   });
   popupPanel.hide();

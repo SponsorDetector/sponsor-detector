@@ -17,7 +17,7 @@ var DetectorServices = new function() {
   };
 
   this.isPresent = function(detectoName, query) {
-    console.log("detectoName",detectoName, "quey", query);
+    console.log("detectoName",detectoName, "query", query);
     var detector = _detectors[detectoName];
     var detected = detector(query);
     if (detected) {
