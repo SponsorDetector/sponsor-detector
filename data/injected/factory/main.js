@@ -53,4 +53,4 @@ var attachBanner = function() {
   document.getElementsByTagName('body')[0].appendChild(banner.element);
 }
 
-attachBanner();
+//attachBanner();
