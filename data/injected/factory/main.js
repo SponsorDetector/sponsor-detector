@@ -6,31 +6,41 @@ var bindForm = function(form) {
   form.sponsorFnSelectorEl.setAttribute('disabled', true);
   form.sponsorEl.setAttribute('disabled', 'true');
 
-  form.submitButton.click = function() {
-    if (!form.domainInput.value || !form.isSponsoredInput.value || !forrm.sponsorBlockQS.value)
-    {
-      console.log("ERROR : every fields shoudd be complete");
-      return;
-    }
-    else {
-      var entry = {
-        domain : form.domainInput.value,
-        isSponsoredInput : form.isSponsoredInput.value,
-        sponsorBlockQS : forrm.sponsorBlockQS.value
-      }
-      console.log(entry);
+  var buildConf = function() {
+    return {
+      domain : Utils.getDomain(window.location.hostname),
+      sponsor : {
+        detector : {
+          name : form.detectorServiceSelector.options[form.detectorServiceSelector.selectedIndex].value,
+          params : [ form.isSponsoredInput.value ]
+        },
+        extractor : {
+          name : form.sponsorBlockQS.value,
+          params : [ form.sponsorRegExpInput.value ]
+        }
+      },
+      author : {}
     }
   }
 
+  form.submitButton.click = function() {
+    var conf = buildConf();
+
+    var result = SponsorDetector.apply(conf, conf.domain);
+
+    // play with result
+
+  }
+
   form.testButton.onclick = function() {
-    var detectorName = form.detectorServiceSelector.options[form.detectorServiceSelector.selectedIndex].value;
-    var query = form.isSponsoredInput.value;
-    if (detectorName && query && DetectorServices.isPresent(detectorName, query)) {
+    var conf = buildConf();
+    var result = SponsorDetector.apply(conf, conf.domain);
+
+    if (result) {
       form.isSponsorisedEl.checked = true;
       form.isSponsorisedEl.setAttribute('title', 'Sponsor indicator detected !');
-      var sponsor = ExtractorServices.findIntHtmlElement(form.sponsorBlockQS.value, form.sponsorRegExpInput.value);
-      if (sponsor) {
-        form.sponsorEl.value = sponsor;
+      if (result.sponsor) {
+        form.sponsorEl.value = result.sponsor;
       }
     }
   }

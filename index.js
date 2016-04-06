@@ -50,6 +50,7 @@ var pageMod = require('sdk/page-mod').PageMod({
       p.properties.injectedFolder() + "configurations/Confs.js",
       p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.servicesFolder() + "SponsorDetector.js",
       p.properties.injectedFolder() + "main.js"
     ],
     contentStyleFile: p.properties.injectedFolder() + "css/fffun.css"
@@ -63,6 +64,7 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
       p.properties.sourceFolder() + "utils.js",
       p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.servicesFolder() + "SponsorDetector.js",
       p.properties.injectedFolder() + "factory/FormFactory.js",
       p.properties.injectedFolder() + "factory/BannerFactory.js",
       p.properties.injectedFolder() + "factory/main.js"
