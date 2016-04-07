@@ -49,8 +49,8 @@ var bindForm = function(form) {
 
 var attachBanner = function() {
   var banner = BannerFactory.build();
-  banner.form = bindForm(banner.form);
+  //banner.form = bindForm(banner.form);
   document.getElementsByTagName('body')[0].appendChild(banner.element);
 }
 
-//attachBanner();
+attachBanner();

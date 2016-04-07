@@ -26,8 +26,8 @@ var BannerFactory = new function() {
     console.log("creating banner");
     var banner = {
       element : createBannerElement(),
-      menu : MenuFactory.build()/*,
-      form : FormFactory.build()*/
+      menu : MenuFactory.build(),
+      form : FormFactory.build()
     };
     var element = document.createElement('body');
     banner = buildBanner(banner);

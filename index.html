@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+  <link rel="stylesheet" type="text/css" href="data/popup/libs/grids-responsive-min.css">
   <link rel="stylesheet" type="text/css" href="data/popup/libs/pure-min.css">
   <link rel="stylesheet" type="text/css" href="data/injected/css/fffun.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <script src="data/scripts/utils.js"></script>
-  <script src="data/injected/services/DetectorServices.js"></script>
   <script src="data/injected/services/ExtractorServices.js"></script>
+  <script src="data/injected/services/DetectorServices.js"></script>
   <script src="data/injected/services/SponsorDetector.js"></script>
-  <script src="data/injected/factory/FormFactory.js"></script>.
+  <script src="data/injected/factory/FormFactory.js"></script>
+  <script src="data/injected/factory/MenuFactory.js"></script>
   <script src="data/injected/factory/BannerFactory.js"></script>
   <script src="data/injected/factory/main.js"></script>
 
-  <div class=".fffun-css-reset fffun-banner" >
 
-    <p>Sponsor Detector</p>
+    <!-- <p>Sponsor Detector</p>
     <div class="pure-menu pure-menu-horizontal custom-can-transform">
       <ul class="pure-menu-list" >
-        <li class="pure-menu-item">
+        <li class="pure-menu-item purre-menu-selected">
            <a href="#" class="pure-menu-link">
              Author
            </a>
@@ -31,20 +31,20 @@
           </a>
         </li>
       </ul>
-    </div>
-  <form class="pure-form">
+    </div> -->
+  <form class="pure-form" hidden="true">
     <fieldset class="pure-group" style="margin-top:15px;">
           <legend>Detector</legend>
           <input id="first-name" class="pure-input-1" placeholder="Detector function name" type="text">
           <input id="first-name" class="pure-input-1" type="text" placeholder="Css selector query">
-          <input id="first-name" class="pure-input-1" disabled="true" type="text" placeholder="result=">
     </fieldset>
+    <input id="first-name" class="pure-input-1" disabled="true" type="text" placeholder="result=">
     <fieldset class="pure-group" style="margin-top:15px;">
           <legend>Extractor</legend>
           <input id="first-name" class="pure-input-1" placeholder="Extractor function name" type="text">
           <input id="first-name" class="pure-input-1" type="text" placeholder="Css selector query">
-          <input id="first-name" class="pure-input-1" disabled="true" type="text" placeholder="result=">
     </fieldset>
+    <input id="first-name" class="pure-input-1" disabled="true" type="text" placeholder="result=">
     <fieldset>
       <button type="button" class="pure-button pure-input-1">Test</button>
       <button type="button" class="pure-button pure-input-1 pure-button-primary">Submit</button>
@@ -54,7 +54,6 @@
   <div class="pure-g">
     <div class="pure-u-1">
       <pre id="json" style="text-align: left;">
-
       </pre>
     </div>
   </div>

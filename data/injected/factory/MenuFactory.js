@@ -18,10 +18,10 @@ var MenuFactory = new function() {
 
   var createMenuItem = function(name) {
     var menuItem = document.createElement('li');
-    menuItem.class = 'pure-menu-item';
+    menuItem.className = 'pure-menu-item';
     var link = document.createElement('a');
     link.setAttribute('href', "#");
-    link.class = 'pure-menu-link';
+    link.className = 'pure-menu-link';
     link.textContent = name;
     menuItem.appendChild(link);
     return menuItem;
@@ -30,20 +30,20 @@ var MenuFactory = new function() {
   var buildMenu = function(menu) {
     for (var attribute in menu) {
       if (menu.hasOwnProperty(attribute) && attribute != "element") {
-        append(menu, menu[attribute])
+        append(menu, menu[attribute]);
       }
     }
-    return banner;
+    return menu;
   };
 
 
 
   this.build = function() {
-    console.log("creating banner");
+    console.log("creating menu");
     var menu = {
       element : createMenu(),
-      author : createMenuItem("Author");
-      sponsor : createMenuItem("Sponsor");
+      author : createMenuItem("Author"),
+      sponsor : createMenuItem("Sponsor")
     };
     menu = buildMenu(menu);
     console.log("menu created");

@@ -13,7 +13,9 @@ var DetectorServices = new function() {
 
     urlContains : function(textToContain) {
       return window.location.href.indexOf(textToContain) > -1;
-    }
+    },
+
+    findIntHtmlElement : ExtractorServices.findIntHtmlElement
   };
 
   this.isPresent = function(detectoName, query) {
