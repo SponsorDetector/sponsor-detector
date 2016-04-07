@@ -6,6 +6,10 @@ var BannerFactory = new function() {
     var banner = document.createElement('div');
     banner.setAttribute('id', 'ffun-addEntry-banner');
     banner.className = 'fffun-css-reset fffun-banner';
+
+    var p = document.createElement('p');
+    p.textContent = "Sponsor Detector";
+    banner.appendChild(p);
     return banner;
   };
 
@@ -22,7 +26,8 @@ var BannerFactory = new function() {
     console.log("creating banner");
     var banner = {
       element : createBannerElement(),
-      form : FormFactory.build()
+      menu : MenuFactory.build()/*,
+      form : FormFactory.build()*/
     };
     var element = document.createElement('body');
     banner = buildBanner(banner);
