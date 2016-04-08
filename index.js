@@ -48,12 +48,16 @@ var pageMod = require('sdk/page-mod').PageMod({
     contentScriptFile : [
       p.properties.sourceFolder() + "utils.js",
       p.properties.injectedFolder() + "configurations/Confs.js",
-      p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "SponsorDetector.js",
       p.properties.injectedFolder() + "main.js"
     ],
-    contentStyleFile: p.properties.injectedFolder() + "css/fffun.css"
+    contentStyleFile: [
+        p.properties.injectedFolder() + "css/fffun.css",
+        p.properties.popupFolder() + "libs/pure-min.css",
+        p.properties.popupFolder() + "libs/grids-responsive-min.css"
+      ]
 });
 
 // In this implementation we'll just log the text to the console.
@@ -62,10 +66,11 @@ popupPanel.port.on("injectAddEntryForm", function (text) {
   tabs.activeTab.attach({
     contentScriptFile: [
       p.properties.sourceFolder() + "utils.js",
-      p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "ExtractorServices.js",
+      p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "SponsorDetector.js",
       p.properties.injectedFolder() + "factory/FormFactory.js",
+      p.properties.injectedFolder() + "factory/MenuFactory.js",
       p.properties.injectedFolder() + "factory/BannerFactory.js",
       p.properties.injectedFolder() + "factory/main.js"
     ]
