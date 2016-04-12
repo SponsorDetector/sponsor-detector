@@ -1,130 +1,148 @@
 'use strict';
 
 var FormFactory = new function() {
+  var self = this;
+  var _form = {};
 
-  var createDomainInputEl = function() {
-    var domainInput = document.createElement('input');
-    domainInput.setAttribute('id', 'domainInput');
-    domainInput.setAttribute('type', 'text');
-    domainInput.setAttribute('value', window.location.hostname);
-    return domainInput;
+  var createFieldSet = function(name) {
+    var fieldset = document.createElement('fieldset');
+    fieldset.className = 'pure-group';
+    var legend = document.createElement('legend');
+    legend.textContent = name;
+    fieldset.appendChild(legend);
+    return fieldset;
   }
 
-  var createSponsorDetectorSelector = function() {
-    var sponsorDetectorElement = document.createElement('select');
-    sponsorDetectorElement.setAttribute('id', 'sponsor-detector-element');
-    var detectors = DetectorServices.getDetectors();
-    for (var querySelectorFn in detectors) {
-      if (detectors.hasOwnProperty(querySelectorFn)) {
-        var detector = document.createElement('option');
-        detector.value = querySelectorFn;
-        detector.text = querySelectorFn;
-        sponsorDetectorElement.appendChild(detector);
-        console.log("Sponsor detector :", querySelectorFn);
+  var createForm = function() {
+    var form = document.createElement('form');
+    form.className = 'pure-form';
+    return form;
+  }
+
+
+  var createOption = function(opt) {
+    var option = document.createElement('option');
+    option.textContent = opt;
+    return option;
+  }
+
+  var createInput = function(placeHolder) {
+    var input = document.createElement('input');
+    input.className = 'pure-input-1';
+    input.setAttribute("placeHolder", placeHolder);
+    return input;
+  }
+
+
+
+  var createChooser = function(service) {
+    var chooser = document.createElement('select');
+    chooser.className = 'pure-input-1';
+    for (var attribute in service) {
+      if (service.hasOwnProperty(attribute)) {
+        chooser.appendChild(createOption(attribute));
       }
     }
-    return sponsorDetectorElement;
-}
-
-  var createIsSponsoredInput = function() {
-    var isSponsoredInput = document.createElement('input');
-    isSponsoredInput.setAttribute('id', 'isSponsoredInput');
-    isSponsoredInput.setAttribute('type', 'text');
-    isSponsoredInput.setAttribute('placeholder', "ex: #article.title");
-    return isSponsoredInput;
+    return chooser;
   }
 
-  var createSponsorFnSelector = function() {
-    var sponsorFnSelectorEl = document.createElement('select');
-    sponsorFnSelectorEl.setAttribute('id', 'sponsorFnSelectorEl');
 
-    var sponsorFnOption = document.createElement('option');
-    sponsorFnOption.value = "findIntHtmlElement";
-    sponsorFnOption.text = "findIntHtmlElement";
-    sponsorFnSelectorEl.appendChild(sponsorFnOption);
-    return sponsorFnSelectorEl;
+
+  var buildInputs = function(chooser, parent) {
+    var fn = chooser.options[chooser.options.selectedIndex].textContent;
+    var inputs = [];
+    var service;
+    if (ExtractorServices.services.hasOwnProperty(fn)) {
+      service = ExtractorServices.services[fn];
+    } else if (DetectorServices.services.hasOwnProperty(fn)) {
+      service = DetectorServices.services[fn];
+    }
+    for (var i = 0; i < service.placeHolders.length; i++)
+    {
+      var input = createInput(service.placeHolders[i]);
+      inputs.push(input);
+      parent.appendChild(input);
+    }
+    return inputs;
   }
 
-  var createSpronsorBlockQS = function() {
-    var sponsorBlockQS = document.createElement('input');
-    sponsorBlockQS.setAttribute('id', 'spronsorBlockQS');
-    sponsorBlockQS.setAttribute('type', 'text');
-    sponsorBlockQS.setAttribute('placeholder', "ex: #article.sponsor");
-    return sponsorBlockQS;
+  var createInputs = function() {
+    _form.authorExInputs = buildInputs(_form.authorExElChooser, _form.authorExEl);
+    _form.sponsorDetInputs = buildInputs(_form.sponsorDetElChooser, _form.sponsorDetEl);
+    _form.sponsorExInputs = buildInputs(_form.sponsorExElChooser, _form.sponsorExEl);
   }
 
-  var createSponsorEl = function() {
-    var sponsorEl = document.createElement('input');
-    sponsorEl.setAttribute('type', 'text');
-    sponsorEl.setAttribute('id', 'sponsorEl');
-    return sponsorEl;
+  this.updateInputs = function(inputs, chooser, fieldset) {
+    for (var i = 0; i < inputs.length; i ++) {
+       fieldset.removeChild(inputs[i]);
+    }
+    inputs = buildInputs(chooser, fieldset);
+    return inputs;
   }
 
-  var createSponsorRegExpInput = function() {
-    var sponsorRegExpInput = document.createElement('input');
-    sponsorRegExpInput.setAttribute('id', 'sponsorRegExpInput');
-    sponsorRegExpInput.setAttribute('type', 'text');
-    sponsorRegExpInput.setAttribute('placeholder', "ex: Sponsorisé par .*");
-    return sponsorRegExpInput;
+
+
+  var createInput = function(placeHolder) {
+    var input = document.createElement('input');
+    input.className = 'pure-input-1';
+    input.setAttribute("placeHolder", placeHolder);
+    return input;
   }
 
-  var createSubmitButton = function() {
-    var submitButton = document.createElement('input');
-    submitButton.setAttribute('id', 'add-entry-submit-button');
-    submitButton.setAttribute('type', 'button');
-    submitButton.setAttribute('value', 'Envoyer');
-    return submitButton;
-  }
-  // tmp
-  var createTestButton = function() {
-    var testButton = document.createElement('input');
-    testButton.setAttribute('type', 'button');
-    testButton.setAttribute('value', 'Test');
-
-    return testButton;
-  }
-  // end tmp
-  var createIsSponsoredEl = function() {
-    var isSponsorisedEl = document.createElement('input');
-    isSponsorisedEl.setAttribute('type', 'checkbox');
-    isSponsorisedEl.setAttribute('id', 'isSponsored');
-    isSponsorisedEl.setAttribute('title', 'No sponsor indicator detected');
-    return isSponsorisedEl;
-  }
-
- // found sponsor, result
-  var createSponsoResultEl = function() {
-    var sponsorEl = document.createElement('input');
-    sponsorEl.setAttribute('type', 'text');
-    return sponsorEl;
+  var createtResultInput = function() {
+    var input = createInput("result=");
+    input.className = input.className + ' pure-input-disabled';
+    input.setAttribute('disabled', "true");
+    return input;
   }
 
   var buildForm = function(form) {
-    for (var attribute in form) {
-      if (form.hasOwnProperty(attribute) && attribute != 'element') {
-        form.element.appendChild(form[attribute]);
-      }
-    }
+    form.element.appendChild(form.authorExEl);
+    form.authorExEl.appendChild(form.authorExElChooser);
+    form.element.appendChild(form.authorInput);
+
+    form.element.appendChild(form.sponsorDetEl);
+    form.sponsorDetEl.appendChild(form.sponsorDetElChooser);
+    form.element.appendChild(form.sponsorDetected);
+
+    form.element.appendChild(form.sponsorExEl);
+    form.sponsorExEl.appendChild(form.sponsorExElChooser);
+    form.element.appendChild(form.sponsorInput);
+
     return form;
   }
 
   this.build = function() {
-    console.log("building form");
-    var form = {
-      element : document.createElement('form'),
-      domainInput : createDomainInputEl(),
-      detectorServiceSelector : createSponsorDetectorSelector(),
-      isSponsoredInput : createIsSponsoredInput(),
-      sponsorFnSelectorEl : createSponsorFnSelector(),
-      sponsorBlockQS : createSpronsorBlockQS(),
-      sponsorRegExpInput : createSponsorRegExpInput(),
-      sponsorEl : createSponsorEl(),
-      isSponsorisedEl : createIsSponsoredEl(),
-      testButton : createTestButton(),
-      submitButton : createSubmitButton()
+    _form = {
+      element : createForm(),
+      authorExEl : createFieldSet("Extractor"),
+      authorExElChooser : createChooser(ExtractorServices.services),
+      authorInput : createtResultInput(),
+      sponsorDetEl : createFieldSet("Detector"),
+      sponsorDetElChooser : createChooser(DetectorServices.services),
+      sponsorDetected : createtResultInput(),
+      sponsorExEl : createFieldSet("Extractor"),
+      sponsorExElChooser : createChooser(ExtractorServices.services),
+      sponsorInput : createtResultInput()
     };
-    form = buildForm(form);
+    _form = buildForm(_form);
+
+    createInputs();
+    _form.sponsorDetElChooser.onchange = function() {
+        _form.sponsorDetInputs = self.updateInputs(_form.sponsorDetInputs, _form.sponsorDetElChooser, _form.sponsorDetEl);
+    }
+
+    _form.authorExElChooser.onchange = function() {
+        _form.authorExInputs = self.updateInputs(_form.authorExInputsauthorExInputs, _form.authorExElChooser, _form.authorExEl);
+    }
+
+    _form.sponsorExElChooser.onchange = function() {
+      _form.sponsorExInputs = self.updateInputs(_form.sponsorExInputs, _form.sponsorExElChooser, _form.sponsorExEl);
+  }
+
+
+
     console.log("form done");
-    return form;
+    return _form;
   }
 }

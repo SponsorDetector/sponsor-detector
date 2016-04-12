@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="data/popup/libs/grids-responsive-min.css">
+  <link rel="stylesheet" type="text/css" href="data/popup/libs/pure-min.css">
+  <link rel="stylesheet" type="text/css" href="data/injected/css/fffun.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <script src="data/scripts/utils.js"></script>
+  <script src="data/injected/services/ExtractorServices.js"></script>
+  <script src="data/injected/services/DetectorServices.js"></script>
+  <script src="data/injected/services/SponsorDetector.js"></script>
+  <script src="data/injected/factory/FormFactory.js"></script>
+  <script src="data/injected/factory/MenuFactory.js"></script>
+  <script src="data/injected/factory/BannerFactory.js"></script>
+  <script src="data/injected/factory/main.js"></script>
+
+
+    <!-- <p>Sponsor Detector</p>
+    <div class="pure-menu pure-menu-horizontal custom-can-transform">
+      <ul class="pure-menu-list" >
+        <li class="pure-menu-item purre-menu-selected">
+           <a href="#" class="pure-menu-link">
+             Author
+           </a>
+         </li>
+        <li class="pure-menu-item ">
+          <a href="#" class="pure-menu-link">
+            Sponsor
+          </a>
+        </li>
+      </ul>
+    </div> -->
+  <form class="pure-form" hidden="true">
+    <fieldset class="pure-group" style="margin-top:15px;">
+          <legend>Detector</legend>
+          <input id="first-name" class="pure-input-1" placeholder="Detector function name" type="text">
+          <input id="first-name" class="pure-input-1" type="text" placeholder="Css selector query">
+    </fieldset>
+    <input id="first-name" class="pure-input-1" disabled="true" type="text" placeholder="result=">
+    <fieldset class="pure-group" style="margin-top:15px;">
+          <legend>Extractor</legend>
+          <input id="first-name" class="pure-input-1" placeholder="Extractor function name" type="text">
+          <input id="first-name" class="pure-input-1" type="text" placeholder="Css selector query">
+    </fieldset>
+    <input id="first-name" class="pure-input-1" disabled="true" type="text" placeholder="result=">
+  </form>
+
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <pre id="json" style="text-align: left;">
+      </pre>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  var data = {
+  "data": {
+    "x": "1",
+    "y": "1",
+    "url": "http://url.com"
+  },
+  "event": "start",
+  "show": 1,
+  "id": 50
+};
+document.getElementById("json").innerHTML = JSON.stringify(data, undefined, 2);
+  </script>
+
+</body>
+</html>

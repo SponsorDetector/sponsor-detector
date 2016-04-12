@@ -1,24 +1,34 @@
 'use strict';
 
 var DetectorServices = new function() {
+  var self = this;
 
-  var _detectors = {
-    querySelector : function(querySelector) {
-      return document.querySelector(querySelector) != null;
+  self.services = {
+    querySelector :  {
+        placeHolders : [ "Css query" ],
+        call : function(querySelector) {
+          return document.querySelector(querySelector) != null;
+        }
+    },
+    titleContains :  {
+        placeHolders : [ "RegExp" ],
+        call : function(textToContain) {
+          return document.title.indexOf(textToContain) > -1;
+        }
+    },
+    urlContains :  {
+        placeHolders : [ "RegExp" ],
+        call : function(textToContain) {
+          return window.location.href.indexOf(textToContain) > -1;
+        },
     },
 
-    titleContains : function(textToContain) {
-      return document.title.indexOf(textToContain) > -1;
-    },
-
-    urlContains : function(textToContain) {
-      return window.location.href.indexOf(textToContain) > -1;
-    }
+    findIntHtmlElement : ExtractorServices.findIntHtmlElement
   };
 
   this.isPresent = function(detectoName, query) {
     console.log("detectoName",detectoName, "query", query);
-    var detector = _detectors[detectoName];
+    var detector = this.detectors[detectoName];
     var detected = detector(query);
     if (detected) {
       console.log("Sponsorised indicator Detected");
@@ -27,7 +37,5 @@ var DetectorServices = new function() {
       console.log("Sposorised indicator absent");
     }
     return detected;
-  },
-
-  this.getDetectors = function() { return _detectors; };
+  }
 };

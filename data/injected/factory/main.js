@@ -1,38 +1,69 @@
 'use strict';
 
-var bindForm = function(form) {
+var bindForm = function(banner) {
+  var form = banner.form;
+  // form.domainInput.setAttribute('disabled', 'true');
+  // form.sponsorFnSelectorEl.setAttribute('disabled', true);
+  // form.sponsorEl.setAttribute('disabled', 'true');
 
-  form.domainInput.setAttribute('disabled', 'true');
-  form.sponsorFnSelectorEl.setAttribute('disabled', true);
-  form.sponsorEl.setAttribute('disabled', 'true');
+  var getParams = function(inputs) {
+    var params = [];
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].value)
+      {
+        params.push(inputs[i].value);
+      }
+    }
+    return params;
+  }
+
 
   var buildConf = function() {
-    return {
-      domain : Utils.getDomain(window.location.hostname),
-      sponsor : {
-        detector : {
-          name : form.detectorServiceSelector.options[form.detectorServiceSelector.selectedIndex].value,
-          params : [ form.isSponsoredInput.value ]
-        },
+    var conf = {};
+    var authorParams = getParams(form.authorExInputs);
+    var sponsorExParams = getParams(form.sponsorExInputs);
+    var sponsorDetParams = getParams(form.sponsorDetInputs);
+    console.log(authorParams);
+    if (authorParams.length > 0) {
+      conf.author = {
         extractor : {
-          name : form.sponsorBlockQS.value,
-          params : [ form.sponsorRegExpInput.value ]
+          name : form.authorExElChooser.options[form.authorExElChooser.selectedIndex].value,
+          params : [ auhorParams ]
         }
-      },
-      author : {}
+      };
+    };
+
+    if (sponsorExParams.length > 0) {
+      conf.sponsor = {
+        detector : {
+          name : form.sponsorDetElChooser.options[form.sponsorDetElChooser.selectedIndex].value,
+          params : [ ]
+        }
+      };
     }
+
+    if (sponsorDetParams.length > 0) {
+      if (!conf.sponsor) {
+        conf.sponsor = {};
+      }
+      conf.sponsor.extractor = {
+          name : form.sponsorExElChooser.options[form.sponsorExElChooser.selectedIndex].value,
+          params : []
+        }
+    }
+
+    return conf;
   }
 
-  form.submitButton.click = function() {
+
+  banner.sendButton.click = function() {
     var conf = buildConf();
-
+    console.log(conf);
     var result = SponsorDetector.apply(conf, conf.domain);
-
     // play with result
-
   }
 
-  form.testButton.onclick = function() {
+  banner.testButton.onclick = function() {
     var conf = buildConf();
     var result = SponsorDetector.apply(conf, conf.domain);
 
@@ -49,7 +80,7 @@ var bindForm = function(form) {
 
 var attachBanner = function() {
   var banner = BannerFactory.build();
-  banner.form = bindForm(banner.form);
+  banner.form = bindForm(banner);
   document.getElementsByTagName('body')[0].appendChild(banner.element);
 }
 
