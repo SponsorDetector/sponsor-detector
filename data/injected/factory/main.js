@@ -1,10 +1,26 @@
 'use strict';
 
-var bindForm = function(banner) {
+var bindForm = function(banner, conf) {
   var form = banner.form;
-  // form.domainInput.setAttribute('disabled', 'true');
-  // form.sponsorFnSelectorEl.setAttribute('disabled', true);
-  // form.sponsorEl.setAttribute('disabled', 'true');
+  // form.authorExEl.setAttribute('hidden', true);
+  console.log(conf);
+  // if a configuration is found on the database
+  if (conf) {
+     form.authored.style.visibility  = 'hidden';
+  }
+  else {
+    form.authored.style.visibility  = 'visible';
+
+    // show "isAuthored ?"
+
+  }
+  console.log(form.authored);
+  form.authored.click = function() {
+    console.log("This configuration is author specific.")
+    if (form.authored.checked) {
+      console.log("This configuration is author specific.")
+    }
+  }
 
   var getParams = function(inputs) {
     var params = [];
@@ -19,7 +35,6 @@ var bindForm = function(banner) {
 
 
   var buildConf = function() {
-    var conf = {};
     var authorParams = getParams(form.authorExInputs);
     var sponsorExParams = getParams(form.sponsorExInputs);
     var sponsorDetParams = getParams(form.sponsorDetInputs);
@@ -77,10 +92,18 @@ var bindForm = function(banner) {
   }
 }
 
+var getConf = function() {
+  var baseUrl = "/api/conf/";
+  var domain = Utils.getDomain(window.location.hostname);
+  domain = baseUrl + domain;
+  return Confs[domain];
+}
+
 
 var attachBanner = function() {
   var banner = BannerFactory.build();
-  banner.form = bindForm(banner);
+  var conf = getConf();
+  banner.form = bindForm(banner, conf);
   document.getElementsByTagName('body')[0].appendChild(banner.element);
 }
 
