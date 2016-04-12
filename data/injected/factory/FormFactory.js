@@ -111,9 +111,6 @@ var FormFactory = new function() {
     label.appendChild(document.createTextNode("Is author specific"));
 
     form.element.appendChild(label);
-    form.element.appendChild(form.authorExEl);
-    form.authorExEl.appendChild(form.authorExElChooser);
-    form.element.appendChild(form.authorInput);
 
     form.element.appendChild(form.sponsorDetEl);
     form.sponsorDetEl.appendChild(form.sponsorDetElChooser);
@@ -129,7 +126,7 @@ var FormFactory = new function() {
     _form = {
       element : createForm(),
       authored : createCheckBox("This configuration is author specific"),
-      authorExEl : createFieldSet("Extractor"),
+      authorExEl : createFieldSet("Author Extractor"),
       authorExElChooser : createChooser(ExtractorServices.services),
       authorInput : createtResultInput(),
       sponsorDetEl : createFieldSet("Detector"),

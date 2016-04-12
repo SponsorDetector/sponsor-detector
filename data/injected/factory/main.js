@@ -1,24 +1,35 @@
 'use strict';
 
+var removeAuthor = function() {
+  form.element.removeChild(form.authorExEl);
+    form.element.removeChild(form.authorInput);
+}
+
+
 var bindForm = function(banner, conf) {
   var form = banner.form;
   // form.authorExEl.setAttribute('hidden', true);
   console.log(conf);
   // if a configuration is found on the database
   if (conf) {
-     form.authored.style.visibility  = 'hidden';
+    //  form.authored.style.visibility  = 'hidden';
+
   }
   else {
-    form.authored.style.visibility  = 'visible';
 
     // show "isAuthored ?"
 
   }
   console.log(form.authored);
-  form.authored.click = function() {
-    console.log("This configuration is author specific.")
+
+  form.authored.onclick = function() {
     if (form.authored.checked) {
-      console.log("This configuration is author specific.")
+      form.element.appendChild(form.authorExEl);
+      form.element.appendChild(form.authorInput);
+    }
+    else {
+      form.element.removeChild(form.authorExEl);
+      form.element.removeChild(form.authorInput);
     }
   }
 
@@ -69,26 +80,28 @@ var bindForm = function(banner, conf) {
 
     return conf;
   }
+  console.log("coucou");
 
 
-  banner.sendButton.click = function() {
+  banner.sendButton.onclick = function() {
     var conf = buildConf();
     console.log(conf);
     var result = SponsorDetector.apply(conf, conf.domain);
     // play with result
   }
+    console.log("coucou");
 
   banner.testButton.onclick = function() {
     var conf = buildConf();
-    var result = SponsorDetector.apply(conf, conf.domain);
+    //var result = SponsorDetector.apply(conf, conf.domain);
 
-    if (result) {
+  /*  if (result) {
       form.isSponsorisedEl.checked = true;
       form.isSponsorisedEl.setAttribute('title', 'Sponsor indicator detected !');
       if (result.sponsor) {
         form.sponsorEl.value = result.sponsor;
       }
-    }
+    }*/
   }
 }
 
