@@ -1,6 +1,7 @@
 /* from ad-detector */
 
 .fffun-css-reset {
+  -webkit-appearance: none;
   animation : none;
   animation-delay : 0;
   animation-direction : normal;
@@ -155,18 +156,43 @@
   position: fixed;
   top: 0;
   right: 0;
+  background-color: #800000;
 
-  width: 275px;
+  width: 250px;
   height: 100%;
-  border : 1px solid lightgray;
   border-color: black;
   color: black;
 
   text-align: center;
   padding-top: 25px;
+  padding: 20px;
   z-index: 2147483647;
+}
+.pure-form fieldset {
+  margin-top: 20px;
+}
+.fffun-banner p {
+  color: white;
+  font-size: 24px;
+}
+
+.pure-form .pure-checkbox {
+  color: white;
+}
+
+.pure-form legend {
+  border-top: 1px solid #e5e5e5;
+  color: white;
 }
 
 input.pure-input-1  {
   font-size: 12px;
+}
+
+input.pure-input-disabled  {
+  background-color: darkgray;
+}
+
+.pure-button {
+  margin-top: 20px;
 }

@@ -60,12 +60,15 @@ var pageMod = require('sdk/page-mod').PageMod({
       ]
 });
 
-// In this implementation we'll just log the text to the console.
+/**
+  Attach to each tab opened
+*/
 popupPanel.port.on("injectAddEntryForm", function (text) {
   console.log("Inject requested");
   tabs.activeTab.attach({
     contentScriptFile: [
       p.properties.sourceFolder() + "utils.js",
+      p.properties.injectedFolder() + "configurations/Confs.js",
       p.properties.servicesFolder() + "ExtractorServices.js",
       p.properties.servicesFolder() + "DetectorServices.js",
       p.properties.servicesFolder() + "SponsorDetector.js",

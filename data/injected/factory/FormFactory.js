@@ -96,10 +96,21 @@ var FormFactory = new function() {
     return input;
   }
 
+  var createCheckBox = function(title) {
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.setAttribute('id', 'isAuthored');
+    return checkbox;
+  }
+
   var buildForm = function(form) {
-    form.element.appendChild(form.authorExEl);
-    form.authorExEl.appendChild(form.authorExElChooser);
-    form.element.appendChild(form.authorInput);
+    var label = document.createElement('label');
+    label.setAttribute('for', 'isAuthored')
+    label.className = 'pure-checkbox';
+    label.appendChild(form.authored);
+    label.appendChild(document.createTextNode("Is author specific"));
+
+    form.element.appendChild(label);
 
     form.element.appendChild(form.sponsorDetEl);
     form.sponsorDetEl.appendChild(form.sponsorDetElChooser);
@@ -108,14 +119,14 @@ var FormFactory = new function() {
     form.element.appendChild(form.sponsorExEl);
     form.sponsorExEl.appendChild(form.sponsorExElChooser);
     form.element.appendChild(form.sponsorInput);
-
     return form;
   }
 
   this.build = function() {
     _form = {
       element : createForm(),
-      authorExEl : createFieldSet("Extractor"),
+      authored : createCheckBox("This configuration is author specific"),
+      authorExEl : createFieldSet("Author Extractor"),
       authorExElChooser : createChooser(ExtractorServices.services),
       authorInput : createtResultInput(),
       sponsorDetEl : createFieldSet("Detector"),

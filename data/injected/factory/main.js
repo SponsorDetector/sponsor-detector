@@ -1,10 +1,37 @@
 'use strict';
 
-var bindForm = function(banner) {
+var removeAuthor = function() {
+  form.element.removeChild(form.authorExEl);
+    form.element.removeChild(form.authorInput);
+}
+
+
+var bindForm = function(banner, conf) {
   var form = banner.form;
-  // form.domainInput.setAttribute('disabled', 'true');
-  // form.sponsorFnSelectorEl.setAttribute('disabled', true);
-  // form.sponsorEl.setAttribute('disabled', 'true');
+  // form.authorExEl.setAttribute('hidden', true);
+  console.log(conf);
+  // if a configuration is found on the database
+  if (conf) {
+    //  form.authored.style.visibility  = 'hidden';
+
+  }
+  else {
+
+    // show "isAuthored ?"
+
+  }
+  console.log(form.authored);
+
+  form.authored.onclick = function() {
+    if (form.authored.checked) {
+      form.element.appendChild(form.authorExEl);
+      form.element.appendChild(form.authorInput);
+    }
+    else {
+      form.element.removeChild(form.authorExEl);
+      form.element.removeChild(form.authorInput);
+    }
+  }
 
   var getParams = function(inputs) {
     var params = [];
@@ -19,7 +46,6 @@ var bindForm = function(banner) {
 
 
   var buildConf = function() {
-    var conf = {};
     var authorParams = getParams(form.authorExInputs);
     var sponsorExParams = getParams(form.sponsorExInputs);
     var sponsorDetParams = getParams(form.sponsorDetInputs);
@@ -54,33 +80,43 @@ var bindForm = function(banner) {
 
     return conf;
   }
+  console.log("coucou");
 
 
-  banner.sendButton.click = function() {
+  banner.sendButton.onclick = function() {
     var conf = buildConf();
     console.log(conf);
     var result = SponsorDetector.apply(conf, conf.domain);
     // play with result
   }
+    console.log("coucou");
 
   banner.testButton.onclick = function() {
     var conf = buildConf();
-    var result = SponsorDetector.apply(conf, conf.domain);
+    //var result = SponsorDetector.apply(conf, conf.domain);
 
-    if (result) {
+  /*  if (result) {
       form.isSponsorisedEl.checked = true;
       form.isSponsorisedEl.setAttribute('title', 'Sponsor indicator detected !');
       if (result.sponsor) {
         form.sponsorEl.value = result.sponsor;
       }
-    }
+    }*/
   }
+}
+
+var getConf = function() {
+  var baseUrl = "/api/conf/";
+  var domain = Utils.getDomain(window.location.hostname);
+  domain = baseUrl + domain;
+  return Confs[domain];
 }
 
 
 var attachBanner = function() {
   var banner = BannerFactory.build();
-  banner.form = bindForm(banner);
+  var conf = getConf();
+  banner.form = bindForm(banner, conf);
   document.getElementsByTagName('body')[0].appendChild(banner.element);
 }
 
