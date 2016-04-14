@@ -5,22 +5,26 @@ var ExtractorServices = new function() {
     findIntHtmlElement : {
       placeHolders : [ "Css query", "RegExp" ],
       call : function(cssQuery, regexString) {
-          this.nbParams = 2;
           var result;
           console.log("query", cssQuery, "regEx", regexString);
-          var element = document.querySelector(cssQuery);
-
-          if (!regexString || regexString === "") {
-            result = element.innerHTML;
-          }
-          else {
-            var regexToMatch = new RegExp(regexString);
-            var match = element.innerHTML.match(regexToMatch);
-            if (match && match[1]) {
-              result = match[1];
+          if (cssQuery && cssQuery != "") {
+            var element = document.querySelector(cssQuery);
+            if(element) {
+              if (!regexString || regexString === "") {
+                console.log(element.innerHTML);
+                result = element.innerHTML;
+              }
+              else {
+                var regexToMatch = new RegExp(regexString);
+                var match = element.innerHTML.match(regexToMatch);
+                if (match && match[1]) {
+                  result = match[1];
+                }
+              }
+              result = result.trim();
             }
           }
-          return result.trim();
+          return result;
         }
       }
     }

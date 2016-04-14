@@ -7,7 +7,9 @@ var DetectorServices = new function() {
     querySelector :  {
         placeHolders : [ "Css query" ],
         call : function(querySelector) {
-          return document.querySelector(querySelector) != null;
+          if (querySelector != "")
+            return document.querySelector(querySelector) != null;
+          return false;
         }
     },
     titleContains :  {
@@ -23,7 +25,7 @@ var DetectorServices = new function() {
         },
     },
 
-    findIntHtmlElement : ExtractorServices.findIntHtmlElement
+    findIntHtmlElement : ExtractorServices.services.findIntHtmlElement
   };
 
   this.isPresent = function(detectoName, query) {

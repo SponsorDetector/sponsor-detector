@@ -92,6 +92,8 @@ var FormFactory = new function() {
   var createtResultInput = function() {
     var input = createInput("result=");
     input.className = input.className + ' pure-input-disabled';
+    input.style.color = "white";
+    input.style["background-color"] = "black";
     input.setAttribute('disabled', "true");
     return input;
   }
