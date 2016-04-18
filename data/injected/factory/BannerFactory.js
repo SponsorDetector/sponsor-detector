@@ -1,6 +1,6 @@
 'use strict';
 
-var BannerFactory = new function() {
+var BannerFactory = function() {
 
   var createBannerElement = function() {
     var banner = document.createElement('div');

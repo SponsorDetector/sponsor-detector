@@ -1,6 +1,6 @@
 'use strict';
 
-var DetectorServices = new function() {
+var DetectorServices = function() {
   var self = this;
 
   self.services = {
