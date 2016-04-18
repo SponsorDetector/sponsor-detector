@@ -1,6 +1,6 @@
 'use strict';
 
-var MenuFactory = new function() {
+var MenuFactory = function() {
 
 
   var append = function(menu, menuItem) {

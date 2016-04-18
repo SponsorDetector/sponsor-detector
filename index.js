@@ -65,6 +65,7 @@ var pageMod = require('sdk/page-mod').PageMod({
 */
 popupPanel.port.on("injectAddEntryForm", function (text) {
   console.log("Inject requested");
+
   tabs.activeTab.attach({
     contentScriptFile: [
       p.properties.sourceFolder() + "utils.js",

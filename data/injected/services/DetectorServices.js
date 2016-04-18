@@ -1,13 +1,15 @@
 'use strict';
 
-var DetectorServices = new function() {
+var DetectorServices = function() {
   var self = this;
 
   self.services = {
     querySelector :  {
         placeHolders : [ "Css query" ],
         call : function(querySelector) {
-          return document.querySelector(querySelector) != null;
+          if (querySelector != "")
+            return document.querySelector(querySelector) != null;
+          return false;
         }
     },
     titleContains :  {
@@ -23,7 +25,7 @@ var DetectorServices = new function() {
         },
     },
 
-    findIntHtmlElement : ExtractorServices.findIntHtmlElement
+    findIntHtmlElement : ExtractorServices.services.findIntHtmlElement
   };
 
   this.isPresent = function(detectoName, query) {
