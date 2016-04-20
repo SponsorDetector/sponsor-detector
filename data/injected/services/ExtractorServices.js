@@ -1,6 +1,6 @@
 'use strict';
 
-var ExtractorServices = function() {
+var ExtractorServices = new function() {
   this.services = {
     findIntHtmlElement : {
       placeHolders : [ "Css query", "RegExp" ],

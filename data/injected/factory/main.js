@@ -9,20 +9,9 @@ var removeAuthor = function() {
 var bindForm = function(banner, conf) {
   var form = banner.form;
   // form.authorExEl.setAttribute('hidden', true);
-  console.log(conf);
   // if a configuration is found on the database
-  if (conf) {
-    //  form.authored.style.visibility  = 'hidden';
 
-  }
-  else {
-
-    // show "isAuthored ?"
-
-  }
-  console.log(form.authored);
-
-  form.authored.onclick = function() {
+  var togglerAuthor = function() {
     if (form.authored.checked) {
       form.element.appendChild(form.authorExEl);
       form.element.appendChild(form.authorInput);
@@ -31,6 +20,16 @@ var bindForm = function(banner, conf) {
       form.element.removeChild(form.authorExEl);
       form.element.removeChild(form.authorInput);
     }
+  }
+
+  if (conf && conf.author) {
+    console.log("configuration found");
+    form.authored.checked = true;
+    togglerAuthor();
+  }
+
+  form.authored.onclick = function() {
+    togglerAuthor();
   }
 
   var getParams = function(inputs) {
@@ -87,6 +86,14 @@ var bindForm = function(banner, conf) {
     return conf;
   }
 
+  var showErrors = function(result) {
+    if (conf) {
+      if (conf.author && form.authorExInputs) {
+        form.authorExInputs.style["border"] = '2px solid green';
+      }
+    }
+  }
+
 
   banner.sendButton.onclick = function() {
     var conf = buildConf();
@@ -98,6 +105,7 @@ var bindForm = function(banner, conf) {
 
     var conf = buildConf();
     var result = SponsorDetector.apply(conf, conf.domain);
+    var valid = showErrors(result);
     console.log("result---------------");
     console.log(JSON.stringify(result, null, 4));
     console.log("------------------------------");
@@ -130,7 +138,7 @@ var getConf = function() {
 
 
 var attachBanner = function() {
-  var banner = BannerFactory.build();
+  var banner = BannerFactory.build("right");
   var conf = getConf();
   banner.form = bindForm(banner, conf);
   document.getElementsByTagName('body')[0].appendChild(banner.element);

@@ -1,6 +1,6 @@
 'use strict';
 
-var FormFactory = function() {
+var FormFactory = new function() {
   var self = this;
   var _form = {};
 
