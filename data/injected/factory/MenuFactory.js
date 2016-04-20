@@ -1,6 +1,6 @@
 'use strict';
 
-var MenuFactory = function() {
+var MenuFactory = new function() {
 
 
   var append = function(menu, menuItem) {
@@ -41,9 +41,9 @@ var MenuFactory = function() {
   this.build = function() {
     console.log("creating menu");
     var menu = {
-      element : createMenu(),
-      author : createMenuItem("Author"),
-      sponsor : createMenuItem("Sponsor")
+      element: createMenu(),
+      author: createMenuItem("Author"),
+      sponsor: createMenuItem("Sponsor")
     };
     menu = buildMenu(menu);
     console.log("menu created");

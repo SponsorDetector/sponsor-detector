@@ -1,6 +1,6 @@
 'use strict';
 
-var BannerFactory = function() {
+var BannerFactory = new function() {
 
   var createBannerElement = function() {
     var banner = document.createElement('div');
@@ -41,9 +41,9 @@ var BannerFactory = function() {
   this.build = function() {
     console.log("creating banner");
     var banner = {
-      element : createBannerElement(),
-      menu : MenuFactory.build(),
-      form : FormFactory.build()
+      element: createBannerElement(),
+      menu: MenuFactory.build(),
+      form: FormFactory.build()
     };
     var element = document.createElement('body');
     banner = buildBanner(banner);
