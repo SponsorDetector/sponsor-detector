@@ -1,6 +1,6 @@
 'use strict';
 
-var SponsorDetector = function() {
+var SponsorDetector = new function() {
 
   var defined = function(array) {
     for (var i = 0; array && i < array.length; i++) {
