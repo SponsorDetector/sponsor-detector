@@ -5,14 +5,34 @@ var domain = Utils.getDomain(window.location.hostname);
 domain = baseUrl + domain;
 console.log("sponsor-detector loaded for domain", domain);
 
-if (domain != baseUrl && Confs[domain]) {
-  var result = SponsorDetector.apply(Confs[domain], domain);
-
-  if (result) {
-    var msg = "Sponsored content";
-    if (result.sponsor) {
-      msg = msg + " by " + result.sponsor;
+var printResult = function(result, stat) {
+  if (stat) {
+    var banner = DetectorBannerFactory.build();
+    document.getElementsByTagName('body')[0].appendChild(banner.element);
+    if (result.author) {
+      banner.author.textContent = result.author;
+      banner.element.appendChild(banner.publishedBy);
+      banner.element.appendChild(banner.author);
+      banner.author.title = "Published " + stat.authored + " sponsored content.";
     }
-    msg = msg + ".";
+
+    if (result.sponsor) {
+      banner.sponsor.textContent = result.sponsor;
+      banner.element.appendChild(banner.sponsoredBy);
+      banner.element.appendChild(banner.sponsor);
+      banner.sponsor.title = "Sponsored " + stat.sponsored + " content.";
+    }
   }
 }
+
+var result = {
+  sponsor : "Bandai Namco",
+  author : "CyprienGaming"
+}
+
+var stat = {
+  authored : 45,
+  sponsored : 10
+}
+
+printResult(result, stat);

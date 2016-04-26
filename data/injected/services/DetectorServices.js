@@ -4,37 +4,38 @@ var DetectorServices = new function() {
   var self = this;
 
   self.services = {
-    querySelector: {
-      placeHolders: ["Css query"],
-      call: function(querySelector) {
-        if (querySelector != "")
-          return document.querySelector(querySelector) != null;
-        return false;
-      }
+    querySelector :  {
+        placeHolders : [ "Css query" ],
+        call : function(querySelector) {
+          if (querySelector != "")
+            return document.querySelector(querySelector) != null;
+          return false;
+        }
     },
-    titleContains: {
-      placeHolders: ["RegExp"],
-      call: function(textToContain) {
-        return document.title.indexOf(textToContain) > -1;
-      }
+    titleContains :  {
+        placeHolders : [ "RegExp" ],
+        call : function(textToContain) {
+          return document.title.indexOf(textToContain) > -1;
+        }
     },
-    urlContains: {
-      placeHolders: ["RegExp"],
-      call: function(textToContain) {
-        return window.location.href.indexOf(textToContain) > -1;
-      },
+    urlContains :  {
+        placeHolders : [ "RegExp" ],
+        call : function(textToContain) {
+          return window.location.href.indexOf(textToContain) > -1;
+        },
     },
 
-    findIntHtmlElement: ExtractorServices.services.findIntHtmlElement
+    findIntHtmlElement : ExtractorServices.services.findIntHtmlElement
   };
 
   this.isPresent = function(detectoName, query) {
-    console.log("detectoName", detectoName, "query", query);
+    console.log("detectoName",detectoName, "query", query);
     var detector = this.detectors[detectoName];
     var detected = detector(query);
     if (detected) {
       console.log("Sponsorised indicator Detected");
-    } else {
+    }
+    else {
       console.log("Sposorised indicator absent");
     }
     return detected;

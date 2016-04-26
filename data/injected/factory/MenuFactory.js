@@ -41,9 +41,9 @@ var MenuFactory = new function() {
   this.build = function() {
     console.log("creating menu");
     var menu = {
-      element: createMenu(),
-      author: createMenuItem("Author"),
-      sponsor: createMenuItem("Sponsor")
+      element : createMenu(),
+      author : createMenuItem("Author"),
+      sponsor : createMenuItem("Sponsor")
     };
     menu = buildMenu(menu);
     console.log("menu created");
