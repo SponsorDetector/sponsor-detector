@@ -15,6 +15,7 @@ var printResult = function(result, stat) {
       banner.element.appendChild(banner.author);
       banner.author.title = "Published " + stat.authored + " sponsored content.";
     }
+
     if (result.sponsor) {
       banner.sponsor.textContent = result.sponsor;
       banner.element.appendChild(banner.sponsoredBy);
