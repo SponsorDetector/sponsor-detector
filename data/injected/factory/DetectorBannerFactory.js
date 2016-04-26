@@ -8,6 +8,18 @@ var DetectorBannerFactory = new function() {
     return banner;
   }
 
+  var createP = function(message) {
+    var p = document.createElement('p');
+    p.style["display"] = 'inline-block';
+    p.textContent = message;
+    return p;
+  }
+
+  var createTag = function() {
+    var tag = createP("");
+    tag.className = 'tag';
+    return tag;
+  }
 
   var buildBanner = function(banner) {
     return banner;
@@ -15,7 +27,11 @@ var DetectorBannerFactory = new function() {
 
   this.build = function() {
     var banner = {
-      element : createDetectorBannerElement()
+      element : createDetectorBannerElement(),
+      publishedBy : createP("Published by "),
+      sponsoredBy : createP("and sponsored by "),
+      author : createTag(),
+      sponsor : createTag()
     }
     banner = buildBanner(banner);
     return banner;
