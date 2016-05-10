@@ -21,8 +21,10 @@ var SponsorDetector = new function() {
       link : window.location.href
     };
     //console.log(JSON.stringify(conf, null, 4));
-
-    if (conf.author && conf.author.extractor && conf.author.extractor.name) {
+    if (conf.authorName) {
+      result.author = conf.authorName;
+    }
+    else if (conf.author && conf.author.extractor && conf.author.extractor.name) {
       var author = ExtractorServices.services[conf.author.extractor.name].call.apply(null, conf.author.extractor.params);
       if (author) {
         result.author = author;

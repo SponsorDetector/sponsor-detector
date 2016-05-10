@@ -11,5 +11,8 @@
   "license": "MIT",
   "keywords": [
     "jetpack"
-  ]
+  ],
+  "permissions": {
+    "cross-domain-content": ["http://dev.ogdabou.ninja:10010"]
+}
 }

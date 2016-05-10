@@ -8,8 +8,6 @@ var removeAuthor = function() {
 
 var bindForm = function(banner, conf) {
   var form = banner.form;
-  // form.authorExEl.setAttribute('hidden', true);
-  // if a configuration is found on the database
 
   var togglerAuthor = function() {
     if (form.authored.checked) {
@@ -98,6 +96,11 @@ var bindForm = function(banner, conf) {
   banner.sendButton.onclick = function() {
     var conf = buildConf();
     var result = SponsorDetector.apply(conf, conf.domain);
+    if (result.sponsorised) {
+      ConfigurationServices.save(conf).then(function(result) {
+        console.log("saved a conf !", conf);
+      })
+    }
     // play with result
   }
 
@@ -122,24 +125,15 @@ var bindForm = function(banner, conf) {
   }
 }
 
-var getConf = function() {
-  var baseUrl = "/api/conf/";
-  var domain = Utils.getDomain(window.location.hostname);
-  domain = baseUrl + domain;
-  var conf = Confs[domain];
-  if (!conf) {
-    console.log(conf);
-    conf = {
-      domain : domain
-    }
-  }
-  return conf;
-}
+
 
 
 var attachBanner = function() {
   var banner = BannerFactory.build("right");
-  var conf = getConf();
+  var conf = {};
+   ConfigurationServices.get().then(function(conf) {
+     bindForm(banner, conf)
+  });
   banner.form = bindForm(banner, conf);
   document.getElementsByTagName('body')[0].appendChild(banner.element);
 }

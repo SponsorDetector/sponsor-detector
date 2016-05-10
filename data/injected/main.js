@@ -1,8 +1,7 @@
 'use strict';
 
-var baseUrl = "/api/conf/";
+var baseUrl = "api/conf/";
 var domain = Utils.getDomain(window.location.hostname);
-domain = baseUrl + domain;
 console.log("sponsor-detector loaded for domain", domain);
 
 var printResult = function(result, stat) {
@@ -25,14 +24,18 @@ var printResult = function(result, stat) {
   }
 }
 
-var result = {
+var res = {
   sponsor : "Bandai Namco",
   author : "CyprienGaming"
 }
 
-var stat = {
+var stats = {
   authored : 45,
   sponsored : 10
 }
 
-printResult(result, stat);
+ConfigurationServices.get().then(function(conf) {
+      var result = SponsorDetector.apply(conf);
+      console.log(result);
+      printResult(result, stats);
+});
