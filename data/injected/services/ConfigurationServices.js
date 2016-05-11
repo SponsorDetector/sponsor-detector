@@ -2,7 +2,7 @@
 
 var ConfigurationServices = new function() {
   var domain = Utils.getDomain(window.location.hostname);
-  var host = "dev.ogdabou.ninja";
+  var host = "localhost";
   var port = "10010";
   var url = "http://" + host + ":" + port + "/api/conf/";
 

@@ -13,6 +13,6 @@
     "jetpack"
   ],
   "permissions": {
-    "cross-domain-content": ["http://dev.ogdabou.ninja:10010"]
-}
+    "cross-domain-content": ["http://localhost:10010"]
+  }
 }
