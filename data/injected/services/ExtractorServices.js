@@ -6,7 +6,6 @@ var ExtractorServices = new function() {
       placeHolders : [ "Css query", "RegExp" ],
       call : function(cssQuery, regexString) {
           var result;
-          console.log("query", cssQuery, "regEx", regexString);
           if (cssQuery && cssQuery != "") {
             var element = document.querySelector(cssQuery);
             if(element) {

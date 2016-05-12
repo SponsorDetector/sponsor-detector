@@ -16,7 +16,7 @@ var ConfigurationServices = new function() {
       promise.get(target, {}, { "Content-Type" : "application/json" })
         .then(function(error, confString, xhr) {
           if (error) {
-            console.log("error", error);
+            console.log("Error while getting configuration:", xhr.statusText);
             reject(error);
           }
           else {
@@ -30,9 +30,11 @@ var ConfigurationServices = new function() {
     return new Promise(function(resolve, reject) {
       var target = url + domain + "/" + author;
       console.log("Getting configuration for author " + author);
+
       promise.get(target, {}, { "Content-Type" : "application/json" })
         .then(function(error, confString, xhr) {
           if (error) {
+            console.log(`Error while getting configuration for $author:`, xhr.statusText);
             reject(error);
           }
           else {
@@ -44,14 +46,15 @@ var ConfigurationServices = new function() {
 
   var save = function(conf) {
     return new Promise(function(resolve, reject) {
-      console.log("Saving conf ", conf);
-      promise.post(target, conf, { "Content-Type" : "application/json" })
+      var target = url;
+      promise.post(target, conf, { "Content-Type" : "application/json; charset=utf-8", "dataType": "json" , "Accept" : "application/json"})
         .then(function(error, resultSring, xhr) {
           if (error) {
-            console.log(error);
+            console.log("Error while saving configuration :", xhr);
             reject(error);
           }
           else {
+            console.log("LOLOLOL", resultSring);
             resolve(JSON.parse(resultSring));
           }
         });

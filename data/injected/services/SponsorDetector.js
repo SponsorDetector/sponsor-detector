@@ -12,6 +12,7 @@ var SponsorDetector = new function() {
     return true;
   }
 
+
   this.apply = function(conf, domain) {
     var result = {
       author : null,
@@ -36,10 +37,10 @@ var SponsorDetector = new function() {
         var sponsor = ExtractorServices.services[conf.sponsor.extractor.name].call.apply(null, conf.sponsor.extractor.params);
         if (sponsor) {
           result.sponsor = sponsor;
-          console.log("author", sponsor);
+          console.log("sponsor", sponsor);
         }
     }
-    console.log(console.log(JSON.stringify(conf, null, 4)))
+
     if (conf.sponsor && conf.sponsor.detector && conf.sponsor.detector.name) {
       var sponsorised = DetectorServices.services[conf.sponsor.detector.name].call.apply(null, conf.sponsor.detector.params);
       if (sponsorised) {

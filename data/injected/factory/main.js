@@ -92,16 +92,49 @@ var bindForm = function(banner, conf) {
     }
   }
 
+  var printResults = function(result) {
+    if (result.author) {
+      form.authorInput.value = result.author;
+    }
+    if (result.sponsorised) {
+      form.sponsorDetected.value = true;
+    }
+    if (result.sponsor) {
+      form.sponsorInput.value = result.sponsor;
+    }
+  }
 
   banner.sendButton.onclick = function() {
-    var conf = buildConf();
+    // var conf = buildConf();
+    // var conf ={
+    //   "domain" : "youtube.com",
+    //   "author" : {
+    //     "extractor" : {
+    //       "name" : "findIntHtmlElement",
+    //       "params" : [ ".yt-user-info > a:nth-child(1)", "" ]
+    //     }
+    //   },
+    //   "sponsor" : {
+    //     "detector" : {
+    //       "name" : "findIntHtmlElement",
+    //       "params" : [ "#eow-description", ".yt-user-info > a:nth-child(1)" ]
+    //     },
+    //     "extractor" : {
+    //       "name" : "findIntHtmlElement",
+    //       "params" : [ "#eow-description", ".yt-user-info > a:nth-child(1)" ]
+    //     }
+    //   }
+    // };
+    //
+    // ConfigurationServices.save(conf);
+
     var result = SponsorDetector.apply(conf, conf.domain);
     if (result.sponsorised) {
       ConfigurationServices.save(conf).then(function(result) {
         console.log("saved a conf !", conf);
       })
     }
-    // play with result
+    printResults(result);
   }
 
   banner.testButton.onclick = function() {
@@ -112,16 +145,8 @@ var bindForm = function(banner, conf) {
     console.log("result---------------");
     console.log(JSON.stringify(result, null, 4));
     console.log("------------------------------");
+    printResults(result);
 
-    if (result.author) {
-      form.authorInput.value = result.author;
-    }
-    if (result.sponsorised) {
-      form.sponsorDetected.value = true;
-    }
-    if (result.sponsor) {
-      form.sponsorInput.value = result.sponsor;
-    }
   }
 }
 
