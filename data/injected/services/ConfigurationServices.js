@@ -54,7 +54,6 @@ var ConfigurationServices = new function() {
             reject(error);
           }
           else {
-            console.log("LOLOLOL", resultSring);
             resolve(JSON.parse(resultSring));
           }
         });

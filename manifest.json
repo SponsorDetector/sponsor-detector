@@ -1,0 +1,13 @@
+{
+	"manifest_version" : 2,
+	"version" : "0.0.1",
+	"name" : "Sponsor Detector",
+	"applications" : {
+		"sponsor-detector": {
+			"id" : "sponsor-detector@ogdabou.com"
+		}
+	},
+	"permissions" : [
+		"http://localhost:10010/"
+	]
+}
