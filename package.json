@@ -13,6 +13,12 @@
     "jetpack"
   ],
   "permissions": {
-    "cross-domain-content": ["http://localhost:10010"]
+    "cross-domain-content": [
+      "http://localhost:10010/"
+    ]
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2"
   }
 }

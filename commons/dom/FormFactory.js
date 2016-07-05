@@ -109,6 +109,10 @@ var FormFactory = new function() {
     var label = document.createElement('label');
     label.setAttribute('for', 'isAuthored')
     label.className = 'pure-checkbox';
+    // !! I don't know what I am doing here
+    label.style['display'] = 'flex';
+    label.style['font-size'] = '12px';
+    // 
     label.appendChild(form.authored);
     label.appendChild(document.createTextNode("Is author specific"));
 
@@ -151,7 +155,7 @@ var FormFactory = new function() {
 
     _form.sponsorExElChooser.onchange = function() {
       _form.sponsorExInputs = self.updateInputs(_form.sponsorExInputs, _form.sponsorExElChooser, _form.sponsorExEl);
-  }
+    }
 
 
 

@@ -2,12 +2,30 @@
 	"manifest_version" : 2,
 	"version" : "0.0.1",
 	"name" : "Sponsor Detector",
+	"description": "Helps to bring sponsorised content to the light.",
 	"applications" : {
-		"sponsor-detector": {
+		"gecko": {
 			"id" : "sponsor-detector@ogdabou.com"
 		}
 	},
 	"permissions" : [
-		"http://localhost:10010/"
-	]
+		"activeTab",
+		"tabs",
+		"webRequest",
+		"http://localhost:10010/*"
+	],
+	"icons" : {
+		"64" : "icons/icon-64.png"
+	},
+	"content_scripts" : [
+		{
+			"matches" : [ "*://*/*" ],
+			"js" : [ "index.js" ] 
+		}
+	],
+	"browser_action": {
+		"default_icon" : "data/imgs/icon-32.png",
+		"default_popup" : "popup/popup.html",
+		"default_title" : "Sponsor Detector"
+	}
 }

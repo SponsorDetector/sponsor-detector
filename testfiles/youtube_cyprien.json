@@ -1,0 +1,27 @@
+{
+    "author": {
+        "extractor": {
+            "name": "findIntHtmlElement",
+            "params": [
+                ".yt-user-info > a:nth-child(1)",
+                ""
+            ]
+        }
+    },
+    "sponsor": {
+        "detector": {
+            "name": "findIntHtmlElement",
+            "params": [
+                "#eow-description",
+                "Merci à (.*) d'avoir sponsorisé la vidéo !"
+            ]
+        },
+        "extractor": {
+            "name": "findIntHtmlElement",
+            "params": [
+                "#eow-description",
+                "Merci à (.*) d'avoir sponsorisé la vidéo !"
+            ]
+        }
+    }
+}

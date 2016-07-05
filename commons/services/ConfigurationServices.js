@@ -2,11 +2,8 @@
 
 var ConfigurationServices = new function() {
   var domain = Utils.getDomain(window.location.hostname);
-  var host = "localhost";
-  var port = "10010";
-  var url = "http://" + host + ":" + port + "/api/conf/";
-
-  domain =  Utils.getDomain("http://youtube.com");
+  var host = "localhost:10010";
+  var url = "http://" + host + "/api/conf/";
 
   var getConf = function() {
     return new Promise(function(resolve, reject) {
@@ -47,17 +44,19 @@ var ConfigurationServices = new function() {
   var save = function(conf) {
     return new Promise(function(resolve, reject) {
       var target = url;
-      promise.post(target, conf, { "Content-Type" : "application/json; charset=utf-8", "dataType": "json" , "Accept" : "application/json"})
-        .then(function(error, resultSring, xhr) {
-          if (error) {
-            console.log("Error while saving configuration :", xhr);
-            reject(error);
-          }
-          else {
-            resolve(JSON.parse(resultSring));
-          }
-        });
-
+      promise.post(
+        target,
+        // data
+        JSON.stringify(conf),
+        { "Content-Type" : "application/json; charset=utf-8", "dataType": "json" , "Accept" : "application/json"}
+       )
+      .then(function(error, text, xhr) {
+         if (error) {
+          console.log('Error', xhr.status);
+          reject('Error ' + xhr.status);
+        }
+        resolve(JSON.parse(text));
+      })
     });
   }
 

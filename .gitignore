@@ -34,3 +34,6 @@ node_modules
 
 .imdone
 conf
+
+# web-ext build dir
+web-ext-artifacts

@@ -7,6 +7,7 @@ var BannerFactory = new function() {
     banner.setAttribute('id', 'ffun-addEntry-banner');
     banner.className = "fffun-css-reset fffun-banner sponsor-detector-banner-" + location;
     var p = document.createElement('p');
+    p.className = 'sponsor-detector-title';
     p.textContent = "Sponsor Detector";
     banner.appendChild(p);
     return banner;

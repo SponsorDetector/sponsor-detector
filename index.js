@@ -5,7 +5,7 @@
 var self = require("sdk/self");
 var buttons = require('sdk/ui/button/action');
 var tabs = require('sdk/tabs');
-var p = require('./local/properties.js')
+var p = require('./commons/properties.js')
 
 /*
     CREATE TOOLBAR BUTTON

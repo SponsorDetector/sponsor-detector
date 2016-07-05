@@ -8,7 +8,14 @@ var removeAuthor = function() {
 
 var bindForm = function(banner, conf) {
   var form = banner.form;
+  /**
+   * In order to use the send button you must test your configuration
+   */
+  // banner.sendButton.disabled = true;
 
+  /**
+   * Toggles author's inputs
+   */
   var togglerAuthor = function() {
     if (form.authored.checked) {
       form.element.appendChild(form.authorExEl);
@@ -80,78 +87,53 @@ var bindForm = function(banner, conf) {
         }
     }
 
-
     return conf;
-  }
-
-  var showErrors = function(result) {
-    if (conf) {
-      if (conf.author && form.authorExInputs) {
-        form.authorExInputs.style["border"] = '2px solid green';
-      }
-    }
   }
 
   var printResults = function(result) {
     if (result.author) {
-      form.authorInput.value = result.author;
+      form.authorInput.value = 'Published : ' + result.author;
     }
     if (result.sponsorised) {
-      form.sponsorDetected.value = true;
+      form.sponsorDetected.value = 'Sponsorised : ' + true;
     }
     if (result.sponsor) {
-      form.sponsorInput.value = result.sponsor;
+      form.sponsorInput.value = 'Sponsor : ' + result.sponsor;
     }
   }
 
   banner.sendButton.onclick = function() {
-    // var conf = buildConf();
-    // var conf ={
-    //   "domain" : "youtube.com",
-    //   "author" : {
-    //     "extractor" : {
-    //       "name" : "findIntHtmlElement",
-    //       "params" : [ ".yt-user-info > a:nth-child(1)", "" ]
-    //     }
-    //   },
-    //   "sponsor" : {
-    //     "detector" : {
-    //       "name" : "findIntHtmlElement",
-    //       "params" : [ "#eow-description", ".yt-user-info > a:nth-child(1)" ]
-    //     },
-    //     "extractor" : {
-    //       "name" : "findIntHtmlElement",
-    //       "params" : [ "#eow-description", ".yt-user-info > a:nth-child(1)" ]
-    //     }
-    //   }
-    // };
-    //
-    // ConfigurationServices.save(conf);
 
+    var conf = buildConf();
     var result = SponsorDetector.apply(conf, conf.domain);
     if (result.sponsorised) {
+      console.log('---------------------------')
+      console.log('Trying to save configuration');
+      console.log(JSON.stringify(conf, null, 4));
+      console.log('---------------------------')
       ConfigurationServices.save(conf).then(function(result) {
-        console.log("saved a conf !", conf);
+        console.log("Saved a new configuration !", conf);
       })
     }
     printResults(result);
   }
 
   banner.testButton.onclick = function() {
-
+    console.log('Testing configuration');
     var conf = buildConf();
     var result = SponsorDetector.apply(conf, conf.domain);
-    var valid = showErrors(result);
-    console.log("result---------------");
-    console.log(JSON.stringify(result, null, 4));
-    console.log("------------------------------");
-    printResults(result);
 
+    /**
+     * TODO : Configuration & result Validation
+     */
+
+    console.log('result---------------');
+    console.log(JSON.stringify(result, null, 4));
+    console.log('------------------------------');
+    printResults(result);
+    banner.sendButton.disabled = false;
   }
 }
-
-
-
 
 var attachBanner = function() {
   var banner = BannerFactory.build("right");

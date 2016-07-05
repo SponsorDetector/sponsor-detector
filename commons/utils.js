@@ -11,6 +11,10 @@ var Utils = {
 
     //find & remove port number
     domain = domain.split(':')[0];
+    if (!domain)
+    {
+      domain = "";
+    }
     return domain;
   }
 };
