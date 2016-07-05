@@ -106,16 +106,21 @@ var bindForm = function(banner, conf) {
 
     var conf = buildConf();
     var result = SponsorDetector.apply(conf, conf.domain);
+    printResults(result);
     if (result.sponsorised) {
       console.log('---------------------------')
       console.log('Trying to save configuration');
       console.log(JSON.stringify(conf, null, 4));
       console.log('---------------------------')
       ConfigurationServices.save(conf).then(function(result) {
+        printResults({
+          "author": "saved!",
+          "sponsor" : "saved!"
+        });
+        banner.element.style.visibility = 'hidden';
         console.log("Saved a new configuration !", conf);
       })
     }
-    printResults(result);
   }
 
   banner.testButton.onclick = function() {
