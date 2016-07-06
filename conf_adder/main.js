@@ -59,6 +59,10 @@ var bindForm = function(banner, conf) {
     var authorParams = getParams(form.authorExInputs);
     var sponsorExParams = getParams(form.sponsorExInputs);
     var sponsorDetParams = getParams(form.sponsorDetInputs);
+
+    conf.domain = Utils.getDomain(window.location.hostname);
+    conf.name = conf.domain;
+
     if (form.authored.checked && authorParams.length > 0) {
       conf.author = {
         extractor : {

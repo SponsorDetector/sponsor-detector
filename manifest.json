@@ -20,7 +20,24 @@
 	"content_scripts" : [
 		{
 			"matches" : [ "*://*/*" ],
-			"js" : [ "index.js" ] 
+			"css" : [
+				"/libs/pure-min.css",
+		        "/libs/grids-responsive-min.css",
+			    "/css/detector.css"
+			],
+			"js" : [ 
+				"/libs/promise.min.js",
+				"/commons/utils.js",
+
+				"/commons/dom/FormFactory.js",
+				"/commons/dom/BannerFactory.js",
+				"/commons/dom/DetectorBannerFactory.js",
+				"/commons/services/ConfigurationServices.js",
+				"/commons/services/ExtractorServices.js",
+				"/commons/services/DetectorServices.js",
+				"/commons/services/SponsorDetector.js",
+
+				"detector_banner/main.js" ] 
 		}
 	],
 	"browser_action": {

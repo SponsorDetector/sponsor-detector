@@ -17,7 +17,7 @@ var SponsorDetector = new function() {
     var result = {
       author : null,
       sponsor : null,
-      domain : domain,
+      domain :  Utils.getDomain(window.location.hostname),
       title : document.title,
       link : window.location.href
     };
@@ -30,6 +30,10 @@ var SponsorDetector = new function() {
       if (author) {
         result.author = author;
         console.log("author", author);
+      }
+      else
+      {
+        result.author = result.domain;
       }
     }
 

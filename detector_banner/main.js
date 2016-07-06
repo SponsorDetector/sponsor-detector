@@ -4,29 +4,31 @@ var baseUrl = "api/conf/";
 var domain = Utils.getDomain(window.location.hostname);
 console.log("sponsor-detector loaded for domain", domain);
 
-var printResult = function(result, stat) {
-  if (stat) {
-    var banner = DetectorBannerFactory.build();
-    document.getElementsByTagName('body')[0].appendChild(banner.element);
-    if (result.author) {
-      banner.author.textContent = result.author;
-      banner.element.appendChild(banner.publishedBy);
-      banner.element.appendChild(banner.author);
-      banner.author.title = "Published " + stat.authored + " sponsored content.";
-    }
+var Detector = new function() {
+  var printResult = function(result, stat) {
+    if (stat) {
+      console.log('stats');
+      var banner = DetectorBannerFactory.build();
+      document.getElementsByTagName('body')[0].appendChild(banner.element);
+      if (result.author) {
+        banner.author.textContent = result.author;
+        banner.element.appendChild(banner.publishedBy);
+        banner.element.appendChild(banner.author);
+      /*  banner.author.title = "Published " + stat.authored + " sponsored content.";*/
+      }
 
-    if (result.sponsor) {
-      banner.sponsor.textContent = result.sponsor;
-      banner.element.appendChild(banner.sponsoredBy);
-      banner.element.appendChild(banner.sponsor);
-      banner.sponsor.title = "Sponsored " + stat.sponsored + " content.";
+      if (result.sponsor) {
+        banner.sponsor.textContent = result.sponsor;
+        banner.element.appendChild(banner.sponsoredBy);
+        banner.element.appendChild(banner.sponsor);
+       /* banner.sponsor.title = "Sponsored " + stat.sponsored + " content.";*/
+      }
     }
   }
-}
 
-var res = {
-  sponsor : "Bandai Namco",
-  author : "CyprienGaming"
+  return {
+    'printResult' : printResult
+  }
 }
 
 var stats = {
@@ -34,8 +36,13 @@ var stats = {
   sponsored : 10
 }
 
-ConfigurationServices.get().then(function(conf) {
+var refreshDetector = function() {
+  ConfigurationServices.get().then(function(conf) {
+      conf = conf[0]["_source"];
       var result = SponsorDetector.apply(conf);
+      console.log(JSON.stringify(conf, null, 4));
       console.log(result);
-      printResult(result, stats);
-});
+      Detector.printResult(result, stats);
+  });
+}
+refreshDetector();

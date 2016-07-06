@@ -34,6 +34,7 @@ var DetectorBannerFactory = new function() {
       sponsor : createTag()
     }
     banner = buildBanner(banner);
+    console.log("banner built");
     return banner;
   }
 
