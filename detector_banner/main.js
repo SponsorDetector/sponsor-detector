@@ -43,6 +43,9 @@ var refreshDetector = function() {
       console.log(JSON.stringify(conf, null, 4));
       console.log(result);
       Detector.printResult(result, stats);
+  })
+  .catch(function(error) {
+    console.log("Error : " + error);
   });
 }
 refreshDetector();

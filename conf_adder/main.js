@@ -124,6 +124,10 @@ var bindForm = function(banner, conf) {
         banner.element.style.visibility = 'hidden';
         console.log("Saved a new configuration !", conf);
       })
+      .catch(function(error) {
+        console.log("Error while saving configuration, won't close adder banner");
+        // TODO print error to client
+      });
     }
   }
 
@@ -147,11 +151,15 @@ var bindForm = function(banner, conf) {
 var attachBanner = function() {
   var banner = BannerFactory.build("right");
   var conf = {};
-   ConfigurationServices.get().then(function(conf) {
-     bindForm(banner, conf)
+
+  ConfigurationServices.get().then(function(conf) {
+      bindForm(banner, conf);
+      document.getElementsByTagName('body')[0].appendChild(banner.element);
+  })
+  .catch(function(error) {
+    banner.form = bindForm(banner, conf);
+    document.getElementsByTagName('body')[0].appendChild(banner.element);
   });
-  banner.form = bindForm(banner, conf);
-  document.getElementsByTagName('body')[0].appendChild(banner.element);
 }
 
 attachBanner();
